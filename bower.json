@@ -1,0 +1,15 @@
+{
+  "name": "omega",
+  "version": "0.1.0",
+  "main": "dist/omega.js",
+  "ignore": [
+    ".jshintrc",
+    "**/*.txt"
+  ],
+  "dependencies": {
+    "jquery": "1.9",
+    "requirejs": null,
+    "requirejs-text": null
+  },
+  "devDependencies": {}
+}

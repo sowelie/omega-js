@@ -111,7 +111,6 @@ define([
 
 				leftPanel.css("top", topHeight + "px");
 				leftPanel.css("left", 0);
-				leftPanel.outerWidth(leftPanel.outerWidth());
 				leftPanel.outerHeight(this._domNode.height() - topHeight - bottomHeight);
 				leftPanel.addClass("ui-left");
 

@@ -32,8 +32,14 @@ define([], function() {
 			};
 		},
 
-		template: function (str, data) {
-			return str.replace(/\{ *([\w_\.]+) *\}/g, this.bind(function (str, key) {
+		template: function (str, data, secondary) {
+			var regex = /\{ *([\w_\.]+) *\}/g;
+
+			if (secondary) {
+				regex = /\$ *([\w_\.]+) *\$/g;
+			}
+
+			return str.replace(regex, this.bind(function (str, key) {
 				return this.bindField(data, key);
 			}, this));
 		},

@@ -9,10 +9,15 @@ define([
 
 			var promises = arguments,
 				result = promise(),
-				completedCount = 0,
-				totalCount = promises.length;
+				completedCount = 0;
 
-			for (var index = 0; index < totalCount; index++) {
+			if (arguments.length == 1 && arguments[0].length) {
+
+				promises = arguments[0];
+
+			}
+
+			for (var index = 0; index < promises.length; index++) {
 
 				var prom = promises[index];
 
@@ -20,7 +25,7 @@ define([
 
 					completedCount++;
 
-					if (completedCount >= totalCount)
+					if (completedCount >= promises.length)
 						result.resolve();
 
 				});

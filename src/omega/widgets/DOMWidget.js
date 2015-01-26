@@ -13,11 +13,14 @@ define(["omega/_Widget"], function(_Widget) {
 
 			this.inherited(_Widget, arguments);
 
+			if (this.className)
+				this.addClass(this.className);
+
 			// wire all events to the DOM node
 			this.wireEventsTo(this._domNode);
 
 		}
 
-	});
+	}, "omega.widgets.DOMWidget");
 
 });

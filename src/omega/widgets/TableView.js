@@ -34,8 +34,8 @@ define([
 				element = $(element);
 
 				this._columnTemplates.push({
-					propertyName: element.attr("data-property-name"),
-					label: element.html()
+					template: element.html(),
+					label: element.attr("data-title")
 				});
 
 			}, this));
@@ -48,10 +48,10 @@ define([
 
 		},
 
-		addColumn: function(propertyName, label, width) {
+		addColumn: function(template, label, width) {
 
 			this._columnTemplates.push({
-				propertyName: propertyName,
+				template: template,
 				label: label,
 				width: width
 			});
@@ -96,7 +96,7 @@ define([
 				// loop through each column
 				this._columnTemplates.forEach(function(columnTemplate) {
 
-					var value = utils.bindField(item, columnTemplate.propertyName);
+					var value = utils.template(columnTemplate.template, item, true);
 
 					var td = new DOMWidget({
 						nodeName: "td",
@@ -116,7 +116,7 @@ define([
 
 						cell: td,
 						item: item,
-						propertyName: columnTemplate.propertyName
+						label: columnTemplate.label
 
 					});
 
@@ -151,7 +151,7 @@ define([
 
 		_rowClick: function(e) {
 
-			this._setSelectedRow(parser.get($(e.target).parent()));
+			this._setSelectedRow(parser.get($(e.target).parents("tr")));
 
 		},
 

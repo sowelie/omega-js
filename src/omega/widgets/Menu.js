@@ -61,6 +61,25 @@ define([
 
 		},
 
+		setSelectedIndex: function(index) {
+			this._domNode.find("a.ui-state-focus").removeClass("ui-state-focus");
+
+			if (index >= 0 && index < this._childWidgets.length) {
+				this._childWidgets[index].find("a").addClass("ui-state-focus");
+			}
+		},
+
+		select: function() {
+			// find the selected item
+			this.eachChild(function(child) {
+
+				if (child.find("a").hasClass("ui-state-focus")) {
+					child._click();
+				}
+
+			}, this);
+		},
+
 		_menuItemClick: function(e) {
 
 			var menuItem = e.menuItem;

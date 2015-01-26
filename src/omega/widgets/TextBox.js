@@ -78,6 +78,12 @@ define([
 			else
 				this._textNode.attr("disabled", "disabled");
 
+		},
+
+		clear: function() {
+
+			this.setValue("");
+
 		}
 
 	});

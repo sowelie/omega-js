@@ -38,7 +38,7 @@ define([
 
 		_clearClick: function() {
 
-			this.setValue("");
+			this.clear();
 			this.trigger("search");
 
 		},

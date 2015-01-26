@@ -1,0 +1,232 @@
+.ui-bordercontainer {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.ui-bordercontainer > div {
+    overflow: auto;
+}
+
+.ui-bordercontainer > .ui-bordercontainer {
+    overflow: hidden;
+}
+
+.ui-button .ui-icon-secondary {
+    display: none;
+}
+
+.ui-button-icon-only .ui-icon {
+    margin-bottom: 2px;
+}
+
+.ui-button-text-only .ui-icon {
+    display: none;
+}
+
+.ui-button-dropdown {
+    padding-right: 20px;
+    position: relative;
+}
+
+.ui-button-dropdown-container {
+    position: absolute;
+    left: 0;
+    display: none;
+    z-index: 997;
+}
+
+.ui-button-dropdown .ui-button-icon-secondary {
+    position: absolute;
+    right: 4px;
+    top: 4px;
+}
+
+.ui-splitbutton {
+    display: inline-block;
+}
+
+.ui-listview {
+    margin: 0;
+    padding: 0;
+}
+
+.ui-listview li {
+    list-style: none;
+    padding: 6px 10px;
+    display: block;
+    cursor: pointer;
+}
+
+.ui-listview li a {
+    color: #000;
+}
+
+.ui-listview li.ui-selected {
+    background-color: #eee;
+    color: #000;
+}
+
+.ui-splitter {
+    position: absolute;
+    background-color: #fff;
+}
+
+.ui-splitter-horizontal {
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    width: 100%;
+    height: 4px;
+    cursor: row-resize;
+}
+
+.ui-splitter-vertical {
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    width: 4px;
+    height: 100%;
+    cursor: col-resize;
+}
+
+.ui-bordercontainer-padded > .ui-panel {
+    padding: 10px;
+}
+
+.ui-tabs {
+    padding: 0;
+}
+
+.ui-tab-body {
+    height: 100%;
+}
+
+.ui-tabs .ui-tabs-nav {
+    border: solid #ddd;
+    border-width: 0 0 1px 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    background: none;
+    overflow: hidden;
+}
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-active a {
+    border-bottom: 1px solid #fff;
+}
+
+.ui-textbox {
+    display: inline-block;
+}
+
+.ui-textbox input {
+    margin: 0;
+}
+
+.ui-progressbar {
+    position: relative;
+}
+
+.ui-progressbar-overlay {
+    display: none;
+}
+
+.ui-progressbar-label {
+    position: absolute;
+    z-index: 1;
+    top: 6px;
+    left: 4px;
+}
+
+.ui-progressbar .ui-progressbar-value {
+    overflow: hidden;
+    position: relative;
+    float: left;
+    white-space: nowrap;
+    z-index: 2;
+    border-radius: 4px;
+    font-weight: normal;
+}
+
+.ui-progressbar .ui-progressbar-value .ui-progressbar-label {
+    top: 5px;
+}
+
+.ui-progressbar-indeterminate .ui-progressbar-overlay {
+    background: url("../images/animated-overlay.gif");
+    height: 100%;
+    filter: alpha(opacity=25);
+    opacity: 0.25;
+}
+
+.ui-progressbar-indeterminate .ui-progressbar-label {
+    margin: 0 auto;
+}
+
+.ui-dialog {
+    display: none;
+    position: absolute;
+    z-index: 999;
+    width: auto;
+    box-shadow: 0 0 32px #000;
+}
+
+.ui-dialog .ui-body {
+    overflow: auto;
+}
+
+.ui-dialog .ui-dialog-title {
+    margin: 0;
+    padding: 0;
+}
+
+.ui-dialog .ui-dialog-titlebar-close {
+    top: 5px;
+    margin: 0;
+}
+
+.ui-dialog-visible {
+    display: block;
+}
+
+.ui-dialog .footer {
+    padding: 8px;
+    border-top: 1px solid #999;
+}
+
+.ui-dialog > .ui-body > .ui-bordercontainer > .ui-center {
+    padding: 10px;
+}
+
+.ui-dialog > .ui-body > .ui-bordercontainer {
+    height: 100%;
+}
+
+.ui-dialog .ui-dialog-buttonpane {
+    overflow: hidden;
+}
+
+.ui-dialog .ui-dialog-buttonpane .left {
+    float: left;
+}
+
+.ui-dialog .ui-dialog-buttonpane .right {
+    float: right;
+}
+
+.confirmationDialog > .confirmation > p {
+    padding: 10px;
+    margin: 0;
+}
+
+.ui-backdrop {
+    z-index: 998;
+    background-color: #aaa;
+    opacity: 0.5;
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}

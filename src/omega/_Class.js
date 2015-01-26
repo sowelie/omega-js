@@ -64,10 +64,13 @@ define(["omega/utils", "omega/polyfill"], function(utils) {
 		// add inherited method
 		proto.inherited = function(base, args) {
 
+			if (typeof(args) == "undefined")
+				args = base;
+
 			var caller = args.callee,
 				name = caller._nom;
 
-			return base.prototype[name].apply(this, args);
+			return caller._base[name].apply(this, args);
 
 		};
 

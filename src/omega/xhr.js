@@ -30,7 +30,6 @@ define([
 			}
 
 			data.format = this._defaultDataType;
-			data.authToken = storage("authToken");
 
 			var result = promise();
 

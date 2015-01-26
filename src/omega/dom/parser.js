@@ -15,10 +15,25 @@ function($, utils) {
 			else
 				$node = $(node);
 
+			// first parse the element itself
+			this._parseElement(node);
+
+			// parse any children
 			$node.find("*[data-widget-class]").each(utils.bind(function(index, element) {
 
-				var $element = $(element),
-					widgetConstructor = require($element.attr("data-widget-class")),
+				this._parseElement(element, parentWidget);
+
+			}, this));
+
+		},
+
+		_parseElement: function(element, parentWidget) {
+
+			var $element = $(element);
+
+			// check to see if the element has a widget class
+			if ($element.attr("data-widget-class")) {
+				var widgetConstructor = require($element.attr("data-widget-class")),
 					arguments = $element.attr("data-widget-args"),
 					widget = $element.data("widget");
 
@@ -93,8 +108,7 @@ function($, utils) {
 						parentWidget.addChild(widget);
 
 				}
-
-			}, this));
+			}
 
 		},
 

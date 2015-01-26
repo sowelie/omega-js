@@ -14,12 +14,11 @@ define([
 
 		resolve: function() {
 
-			var args = arguments;
-
 			this._isComplete = true;
+			this._args = arguments;
 
 			this._callbacks.forEach(function(callback) {
-				callback.method.apply(callback.scope || window, args);
+				callback.method.apply(callback.scope || window, arguments);
 			});
 		},
 
@@ -27,7 +26,7 @@ define([
 
 			if (this._isComplete) {
 
-				callback.apply(scope || window, []);
+				callback.apply(scope || window, this._args);
 
 			} else {
 

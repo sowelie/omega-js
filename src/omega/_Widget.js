@@ -16,6 +16,7 @@ define([
 			this._childWidgets = [];
 			this._shortcuts = [];
 			this._mixinTemplateStrings = [];
+			this._hasStarted = false;
 
 		},
 
@@ -111,7 +112,22 @@ define([
 
 			if (mixinAttachPoint == "domNode")
 				attachNode = this._domNode;
-			else
+			else if (mixinAttachPoint == "documentBody") {
+				attachNode = $(document.body);
+
+				// parse the element
+				parser.parse(node);
+
+				// attach the element now, as it will no longer be a part of the widget's DOM tree
+				this._attachElement(node);
+
+				// attach child elements now also
+				node.find("*[data-attach-point]").each(utils.bind(function(index, element) {
+
+					this._attachElement(element);
+
+				}, this));
+			} else
 				attachNode = this._domNode.find("*[data-attach-point='" + mixinAttachPoint + "']");
 
 			// attach the mixin node
@@ -138,7 +154,7 @@ define([
 			if ($element.data("widget"))
 				value = $element.data("widget");
 
-			this.log(this, $element.data("attachedToWidget"), $element.attr("data-attach-point"));
+			this.log("ATTACH ELEMENT", this, $element.data("widget"), $element.data("attachedToWidget"), $element.attr("data-attach-point"));
 
 			if ($element.data("attachedToWidget") && $element.data("attachedToWidget") != this)
 				return;
@@ -175,6 +191,9 @@ define([
 			if (keyCode == 27)
 				keys.push("esc");
 
+			if (keyCode == 32)
+				keys.push("space");
+
 			var character = String.fromCharCode(keyCode).toLowerCase();
 
 			// only use digits and word characters
@@ -192,16 +211,23 @@ define([
 
 		startup: function() {
 
-			// check to see if the widget's DOM has been initialized
-			if (!this._domNode) {
+			// make sure the widget hasn't started already
+			if (!this._hasStarted) {
 
-				this.initDomNode();
-				this.attachElements();
-				parser.parse(this._domNode, this);
+				this._hasStarted = true;
+
+				// check to see if the widget's DOM has been initialized
+				if (!this._domNode) {
+
+					this.initDomNode();
+					this.attachElements();
+					parser.parse(this._domNode, this);
+
+				}
+
+				events.on(document, "keydown", this._keyDown, this);
 
 			}
-
-			events.on(document, "keydown", this._keyDown, this);
 
 		},
 

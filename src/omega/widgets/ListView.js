@@ -51,6 +51,8 @@ define([
 				item.setSelected(true);
 				this._selectedItem = item;
 
+				this.trigger("itemselected", { tag: item.tag, node: item._domNode });
+
 			}
 
 		},
@@ -87,6 +89,8 @@ define([
 						item.setSelected(true);
 						this._selectedItem = item;
 
+						this.trigger("itemselected", { tag: item.tag, node: item._domNode });
+
 					}
 
 				} else {
@@ -99,6 +103,8 @@ define([
 							this._deselect();
 							listItem.setSelected(true);
 							this._selectedItem = listItem;
+
+							this.trigger("itemselected", { tag: listItem.tag, node: listItem._domNode });
 
 						}
 
