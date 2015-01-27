@@ -21,6 +21,16 @@
     margin-bottom: 2px;
 }
 
+.ui-button-icon-left {
+    padding-left: 26px;
+    position: relative;
+}
+
+.ui-button-icon-left .ui-icon {
+    top: 6px;
+    left: 6px;
+}
+
 .ui-button-text-only .ui-icon {
     display: none;
 }
