@@ -39,7 +39,7 @@ define([
 
 					this.addChild(tab);
 
-					tab._domNode.append($element);
+					tab._domNode.append($element.children());
 				}
 
 			}, this));

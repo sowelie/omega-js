@@ -115,6 +115,7 @@ define([
 					this.trigger("bindcell", {
 
 						cell: td,
+                        row: row,
 						item: item,
 						label: columnTemplate.label
 
