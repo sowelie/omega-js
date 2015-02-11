@@ -29,13 +29,15 @@ define([
 			this.inherited(_Widget, arguments);
 
 			// grab the column templates
-			this._containerNode.find("*").each(utils.bind(function(index, element) {
+			this._containerNode.find("> *").each(utils.bind(function(index, element) {
 
 				element = $(element);
 
 				this._columnTemplates.push({
 					template: element.html(),
-					label: element.attr("data-title")
+					label: element.attr("data-title"),
+                    width: element.attr("data-width"),
+                    updateValue: element.attr("data-update-value")
 				});
 
 			}, this));
@@ -48,12 +50,13 @@ define([
 
 		},
 
-		addColumn: function(template, label, width) {
+		addColumn: function(template, label, width, updateValue) {
 
 			this._columnTemplates.push({
 				template: template,
 				label: label,
-				width: width
+				width: width,
+                updateValue: updateValue
 			});
 
 		},
@@ -81,7 +84,7 @@ define([
 
 		},
 
-		bind: function(data) {
+		bind: function(data, idProperty) {
 
 			this._destroyRows();
 			this._drawHeaders();
@@ -90,45 +93,7 @@ define([
 			// loop through each row
 			data.forEach(function(item) {
 
-				var row = new DOMWidget({ nodeName: "tr", parentNode: this._bodyNode });
-				row.startup();
-
-				// loop through each column
-				this._columnTemplates.forEach(function(columnTemplate) {
-
-					var value = utils.template(columnTemplate.template, item, true);
-
-					var td = new DOMWidget({
-						nodeName: "td",
-						innerHTML: value
-					});
-
-					row.addChild(td);
-
-					if (columnTemplate.width) {
-
-						td.css("width", columnTemplate.width + "px");
-						td.attr("title", value);
-
-					}
-
-					this.trigger("bindcell", {
-
-						cell: td,
-                        row: row,
-						item: item,
-						label: columnTemplate.label
-
-					});
-
-				}, this);
-
-				row.on("click", this._rowClick, this);
-
-				// store the item as a part of the row
-				row.data("dataItem", item);
-
-				this.addChild(row);
+				this.updateRow(item, idProperty, false);
 
 			}, this);
 
@@ -139,6 +104,102 @@ define([
 			this.bind(data.list);
 
 		},
+
+        updateRow: function(item, idProperty, checkExists) {
+
+            var row = null;
+
+            // default checkExists to true
+            if (typeof(checkExists) == "undefined") {
+                checkExists = true;
+            }
+
+            // check to see if the table should be updated
+            if (idProperty && checkExists) {
+
+                var id = utils.bindField(item, idProperty);
+
+                // find the row with the specified id
+                this._childWidgets.some(function(otherRow) {
+
+                    if (otherRow.attr("data-row-id") == id) {
+
+                        row = otherRow;
+                        return true;
+
+                    }
+
+                });
+
+            }
+
+            // if no row was found, create a blank one
+            if (!row) {
+
+                row = new DOMWidget({nodeName: "tr", parentNode: this._bodyNode});
+                row.startup();
+                row.on("click", this._rowClick, this);
+                this.addChild(row);
+
+            }
+
+            if (idProperty) {
+                row.attr("data-row-id", utils.bindField(item, idProperty));
+            }
+
+            // loop through each column
+            this._columnTemplates.forEach(function(columnTemplate, index) {
+
+                var value = utils.template(columnTemplate.template, item, true),
+                    td = row.getChild(index),
+                    updateValue = true,
+                    triggerBind = false;
+
+                if (typeof(columnTemplate.updateValue) != "undefined") {
+                    updateValue = columnTemplate.updateValue == "true";
+                }
+
+                if (td == null) {
+
+                    td = new DOMWidget({
+                        nodeName: "td",
+                        innerHTML: value
+                    });
+
+                    row.addChild(td);
+                    triggerBind = true;
+
+                } else if (updateValue) {
+
+                    td.html(value);
+                    triggerBind = true;
+
+                }
+
+                if (columnTemplate.width) {
+
+                    td.css("width", columnTemplate.width + "px");
+                    td.attr("title", value);
+
+                }
+
+                if (triggerBind) {
+                    this.trigger("bindcell", {
+
+                        cell: td,
+                        row: row,
+                        item: item,
+                        label: columnTemplate.label
+
+                    });
+                }
+
+            }, this);
+
+            // store the item as a part of the row
+            row.data("dataItem", item);
+
+        },
 
 		setSelectedIndex: function(index) {
 

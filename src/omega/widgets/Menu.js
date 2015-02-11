@@ -84,7 +84,7 @@ define([
 
 			var menuItem = e.menuItem;
 
-			this.trigger("menuitemclick", { menuItem: menuItem, targetWidget: this.targetWidget });
+			this.trigger("menuitemclick", { menuItem: menuItem, targetWidget: this });
 
 		},
 

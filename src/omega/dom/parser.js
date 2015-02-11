@@ -41,6 +41,12 @@ function($, utils) {
 				if (!widget) {
 
 					if (arguments) {
+
+                        // check to see if the {} are there
+                        if (!arguments.startsWith("{")) {
+                            arguments = "{" + arguments + "}";
+                        }
+
 						// add quotes
 						arguments = arguments.replace(/(\{|,)\s*([\w\d_]*)\:/g, "$1\"$2\":");
 						arguments = arguments.replace(/'/g, "\"");

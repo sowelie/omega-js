@@ -24,7 +24,7 @@ module.exports = function(grunt) {
         requirejs: {
             options: {
                 preserveLicenseComments: false,
-                optimize: "uglify"
+                optimize: "none"
             },
 
             omega: {
@@ -33,7 +33,7 @@ module.exports = function(grunt) {
                     mainConfigFile: 'src/omega/config.release.js',
                     include: ["omega/main"],
                     exclude: ["jquery", "text"],
-                    out: "dist/js/omega.min.js"
+                    out: "dist/js/omega.js"
                 }
             }
         },

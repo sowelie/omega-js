@@ -292,6 +292,14 @@ define([
 
 		},
 
+        getChild: function(index) {
+            if (index >= 0 && index < this._childWidgets.length) {
+                return this._childWidgets[index];
+            } else {
+                return null;
+            }
+        },
+
 		clearChildren: function() {
 
 			this.eachChild(function(widget) {
@@ -420,13 +428,13 @@ define([
 
 		attr: function(name, value) {
 
-			this._domNode.attr(name, value);
+			return this._domNode.attr.apply(this._domNode, arguments);
 
 		},
 
 		append: function(value) {
 
-			this._domNode.append(value);
+			return this._domNode.append(value);
 
 		},
 
