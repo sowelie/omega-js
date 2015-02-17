@@ -245,6 +245,116 @@
     height: 100%;
 }
 
+.ui-treeview {
+    padding: 0;
+    width: 100%;
+}
+
+.ui-treeview .ui-treeview-node {
+    list-style: none;
+    cursor: pointer;
+    float: none;
+}
+
+.ui-treeview .ui-treeview-node .ui-content {
+    position: relative;
+    display: block;
+}
+
+.ui-treeview-node.ui-no-children .ui-icon-primary {
+    background: none;
+}
+
+.ui-treeview-node .ui-icon {
+    position: absolute;
+    top: 2px;
+    left: 0;
+}
+
+.ui-treeview-node .ui-icon-secondary {
+    top: 2px;
+    left: 20px;
+}
+
+.ui-treeview .ui-treeview-node-checkbox .ui-icon-secondary {
+    left: 40px;
+}
+
+.ui-treeview .ui-treeview-node-checkbox input {
+    position: absolute;
+    left: 20px;
+}
+
+.ui-treeview .ui-treeview-node a {
+    display: block;
+    text-decoration: none;
+    padding: 0;
+}
+
+.ui-treeview-node .ui-label {
+    padding: 2px 0 2px 20px;
+}
+
+.ui-treeview-node.ui-has-icon .ui-label {
+    padding: 2px 0 2px 40px;
+    display: block;
+    white-space: nowrap;
+}
+
+.ui-treeview .ui-treeview-node-checkbox .ui-label {
+    padding-left: 40px;
+}
+
+.ui-treeview-node-checkbox.ui-has-icon .ui-label {
+    padding-left: 60px;
+}
+
+.ui-treeview-node > .ui-container {
+    display: none;
+    padding: 0;
+}
+
+.ui-treeview-node-open > .ui-container {
+    display: block;
+}
+
+.ui-tableview {
+    padding: 0;
+    margin: 0;
+    float: none;
+    width: auto;
+}
+
+.ui-tableview table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.ui-tableview th {
+    text-align: left;
+    padding: 8px;
+    border-bottom: 1px solid #999;
+    border-right: 1px solid #fff;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ui-tableview td {
+    padding: 2px 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.ui-tableview .ui-menu-item {
+    float: none;
+    cursor: pointer;
+}
+
+.ui-tableview th:last-child {
+    border-right: none;
+}
+
 .ui-button.ui-state-custom-loading {
     padding-right: 24px;
 }

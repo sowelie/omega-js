@@ -15,7 +15,7 @@ define([
 
 		initialize: function() {
 
-			this.inherited(BorderContainer, arguments);
+			this.inherited(arguments);
 
 			this._mixinTemplateStrings.push(template);
 
@@ -23,7 +23,7 @@ define([
 
 		startup: function() {
 
-			this.inherited(BorderContainer, arguments);
+			this.inherited(arguments);
 
 			var tabs = this._containerNode.children(),
 				tabCount = 0;
@@ -50,6 +50,7 @@ define([
 
 		destroy: function() {
 
+            this.inherited(arguments);
 
 			this._childWidgets.forEach(function(tab) {
 
@@ -84,7 +85,7 @@ define([
 
 			}
 
-			this.inherited(BorderContainer, arguments);
+			this.inherited(arguments);
 
 			return tab;
 
@@ -139,8 +140,9 @@ define([
 
 		layoutChildren: function() {
 
-			if (this.autoPosition)
-				this.inherited(BorderContainer, arguments);
+			if (this.autoPosition) {
+                this.inherited(arguments);
+            }
 
 		}
 
