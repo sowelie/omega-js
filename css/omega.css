@@ -245,6 +245,67 @@
     height: 100%;
 }
 
+.ui-search-textbox {
+    position: relative;
+}
+
+.ui-search-textbox input {
+    padding: 2px 25px;
+    font-size: 16px;
+}
+
+.ui-search-textbox .tango {
+    top: 6px;
+    left: 6px;
+}
+
+.ui-search-textbox .ui-clear {
+    top: 6px;
+    right: 6px;
+    left: auto;
+    cursor: pointer;
+    display: none;
+}
+
+.ui-filter-textbox {
+    position: relative;
+    padding-left: 25px;
+    cursor: text;
+}
+
+.ui-filter-textbox input {
+    border: none;
+    background: none;
+    box-shadow: none;
+}
+
+.ui-filter-textbox .valueContainer {
+    position: absolute;
+    left: 0;
+    top: 4px;
+    height: 100%;
+    padding-left: 25px;
+}
+
+.ui-filter-textbox .valueContainer .filterValue {
+    padding: 4px 16px 4px 4px;
+    margin-left: 4px;
+    max-width: 200px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.ui-filter-textbox .valueContainer .filterValue .close {
+    position: absolute;
+    right: 0;
+    top: 4px;
+}
+
+.ui-filter-textbox input {
+    padding: 4px;
+}
+
 .ui-treeview {
     padding: 0;
     width: 100%;

@@ -11,6 +11,7 @@ require([
     "omega/widgets/DOMTreeViewAdapter",
     "omega/widgets/DOMWidget",
     "omega/widgets/DropDownButton",
+    "omega/widgets/FilterTextBox",
     "omega/widgets/ListItem",
     "omega/widgets/ListView",
     "omega/widgets/Menu",
