@@ -9,7 +9,8 @@ define([
 	"omega/widgets/ListView",
 	"demo/widgets/TabContainer",
 	"demo/widgets/ProgressBar",
-	"demo/widgets/Dialogs"
+	"demo/widgets/Dialogs",
+    "demo/widgets/FilterTextBox"
 ], function(BorderContainer, events, template) {
 
 	return BorderContainer.extend({

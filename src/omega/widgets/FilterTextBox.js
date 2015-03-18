@@ -79,9 +79,14 @@ define([
 
         },
 
-        _domClick: function() {
+        _domClick: function(e) {
+
+            e.preventDefault();
+            e.stopPropagation();
 
             this._textNode.focus();
+
+            return false;
 
         },
 
@@ -89,13 +94,14 @@ define([
             this._menuIndex = 0;
 
             if (typeof(fields.forEach) == "function") {
-                var menu = this._menuNode;
+                var menu = this._menuNode,
+                    value = this.getValue().trim().toLowerCase();
                 menu.clearItems();
 
                 fields.forEach(function(field) {
                     // check to see if the user's input matches the current value
                     // also make sure the user hasn't already selected this filter
-                    if (field.label.toLowerCase().indexOf(this.getValue().toLowerCase()) != -1
+                    if ((field.label.toLowerCase().indexOf(value) != -1 || value.length == 0)
                         && !this._hasFilter(field)) {
                         var menuItem = new MenuItem({ label: field.label, dataItem: field });
                         menuItem.on("click", this._fieldClick, this);
@@ -115,7 +121,8 @@ define([
 
             this._values.some(function(value) {
 
-                if (value.field.value == field.value) {
+                if ((value.field.value != null && value.field.value == field.value)
+                    || (value.field.label != null && value.field.label == field.label)) {
                     result = true;
                     return true;
                 }
@@ -153,7 +160,7 @@ define([
                 var menu = this._menuNode;
                 menu.clearItems();
 
-                var value = this.getValue().replace(this._currentField.label + ": ", "").toLowerCase();
+                var value = this.getValue().trim().toLowerCase();
 
                 values.forEach(function(valueName) {
                     if (valueName.label.toLowerCase().indexOf(value) != -1 || value.length == 0) {
@@ -167,6 +174,25 @@ define([
 
                 menu.show();
             }
+        },
+
+        getValue: function() {
+
+            var value = this.inherited(arguments),
+                colonIndex = value.indexOf(":");
+
+            if (colonIndex >= 0) {
+                value = value.substring(colonIndex + 1).trim();
+            }
+
+            return value;
+
+        },
+
+        getRawValue: function() {
+
+            return SearchTextBox.prototype.getValue.apply(this, arguments);
+
         },
 
         _valueClick: function(e) {
@@ -245,9 +271,15 @@ define([
                     this._menuIndex++;
                 }
             } else if (e.keyCode == 13) {
-                this._menuNode.select();
+                if (this._menuNode.isVisible()) {
+                    this._menuNode.select();
+                } else {
+                    this._addValue(this._currentField, { label: this.getValue() });
+                    this._currentField = null;
+                    this.clear();
+                }
             } else {
-                if (this.getValue().indexOf(":") == -1) {
+                if (this.getRawValue().indexOf(":") == -1) {
                     this.trigger("listfields", this.getValue());
                 } else {
                     this.trigger("listvalues", this._currentField);

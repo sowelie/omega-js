@@ -306,6 +306,13 @@
     padding: 4px;
 }
 
+.ui-filter-textbox .ui-menu {
+    position: absolute;
+    z-index: 999;
+    max-height: 400px;
+    overflow: auto;
+}
+
 .ui-treeview {
     padding: 0;
     width: 100%;

@@ -445,7 +445,13 @@ define([
 			else
 				this._domNode.attr("disabled", "disabled");
 
-		}
+		},
+
+        isVisible: function() {
+
+            return this._domNode.is(":visible");
+
+        }
 
 	});
 
