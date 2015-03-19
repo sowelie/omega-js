@@ -274,7 +274,9 @@ define([
                 if (this._menuNode.isVisible()) {
                     this._menuNode.select();
                 } else {
-                    this._addValue(this._currentField, { label: this.getValue() });
+                    var value = this.getValue();
+
+                    this._addValue(this._currentField, { label: value, value: value });
                     this._currentField = null;
                     this.clear();
                 }

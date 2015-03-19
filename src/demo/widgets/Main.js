@@ -10,7 +10,8 @@ define([
 	"demo/widgets/TabContainer",
 	"demo/widgets/ProgressBar",
 	"demo/widgets/Dialogs",
-    "demo/widgets/FilterTextBox"
+    "demo/widgets/FilterTextBox",
+    "demo/widgets/DragAndDrop"
 ], function(BorderContainer, events, template) {
 
 	return BorderContainer.extend({

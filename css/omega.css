@@ -455,3 +455,20 @@
 .ui-treeview .ui-treeview-node-checkbox .ui-icon-secondary {
     left: 40px;
 }
+
+.ui-dragcontainer {
+    min-height: 20px;
+    min-width: 100px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    position: absolute;
+    z-index: 999;
+}
+
+.ui-dragtarget-above {
+    border-top: 2px solid #1A237E;
+}
+
+.ui-dragtarget-below {
+    border-bottom: 2px solid #1A237E;
+}

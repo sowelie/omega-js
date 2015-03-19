@@ -100,7 +100,11 @@ define([
 
 		_getDragId: function(element) {
 
-			var dragId = element._dragId;
+            if (!element.jquery) {
+                element = $(element);
+            }
+
+			var dragId = element.data("dragId");
 
 			if (!dragId) {
 
