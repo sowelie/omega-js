@@ -40,7 +40,10 @@ define([
 					this.addChild(tab);
 
 					tab._domNode.append($element.children());
+					tab._domNode.addClass($element.attr("class"));
 				}
+
+				$element.detach();
 
 			}, this));
 

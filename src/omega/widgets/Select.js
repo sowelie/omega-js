@@ -22,6 +22,10 @@ define([
 
 		},
 
+        clear: function() {
+            this._domNode.empty();
+        },
+
 		getValue: function() {
 
 			return this._domNode.find("option:selected").attr("value");

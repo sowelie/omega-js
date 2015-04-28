@@ -18,8 +18,8 @@ define([
 			this._args = arguments;
 
 			this._callbacks.forEach(function(callback) {
-				callback.method.apply(callback.scope || window, arguments);
-			});
+				callback.method.apply(callback.scope || window, this._args);
+			}, this);
 		},
 
 		then: function(callback, scope) {

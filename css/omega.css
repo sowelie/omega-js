@@ -13,6 +13,10 @@
     overflow: hidden;
 }
 
+.ui-button {
+    position: relative;
+}
+
 .ui-button .ui-icon-secondary {
     display: none;
     position: absolute;
@@ -27,7 +31,6 @@
 
 .ui-button-icon-left {
     padding-left: 26px;
-    position: relative;
 }
 
 .ui-button-icon-left .ui-icon {
@@ -57,6 +60,10 @@
     top: 4px;
 }
 
+.ui-button[disabled] {
+    opacity: 0.6;
+}
+
 .ui-splitbutton {
     display: inline-block;
 }
@@ -80,6 +87,10 @@
 .ui-listview li.ui-selected {
     background-color: #eee;
     color: #000;
+}
+
+.ui-listview-draggable .ui-menu-item {
+    cursor: move;
 }
 
 .ui-splitter {
@@ -311,6 +322,25 @@
     z-index: 999;
     max-height: 400px;
     overflow: auto;
+}
+
+.ui-filter-textbox .ui-menu li {
+    cursor: pointer;
+}
+
+.ui-filter-textbox {
+    min-width: 200px;
+    height: 26px;
+    vertical-align: middle;
+}
+
+.ui-filter-textbox-single-value.ui-filter-textbox-with-value input {
+    display: none;
+}
+
+.ui-filter-textbox-single-value .valueContainer .filterValue {
+    width: 100%;
+    max-width: 100%;
 }
 
 .ui-treeview {

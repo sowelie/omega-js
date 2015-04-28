@@ -29,6 +29,7 @@ define([
                 this._dragManager.on("dragend", this._dragEnd, this);
                 this._dragManager.on("dragover", this._dragOver, this);
                 this._dragManager.on("dragout", this._dragOut, this);
+                this._domNode.addClass("ui-listview-draggable")
             }
 
 			items.each(utils.bind(function(index, element) {

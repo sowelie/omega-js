@@ -22,9 +22,17 @@ define([
                 }
             }, this);
 
+            this._autoCompleteNode.on("listfields", function() {
+                this._autoCompleteNode.showValuesMenu([{ label: "Apple", value: 0 }, { label: "Banana", value: 1 } ])
+            }, this);
+
             this._filterNode.on("filterchange", function(e) {
                 console.log(e);
-            })
+            });
+
+            this._autoCompleteNode.on("filterchange", function(e) {
+                console.log(e);
+            });
 
         }
 

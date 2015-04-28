@@ -26,36 +26,54 @@ define([
 
         },
 
-        setPagedResults: function(results) {
+        setOptions: function(options) {
 
-            var start = results.pageNumber * results.pageSize + 1,
-                end = start + results.pageSize - 1;
+            var start = options.pageNumber * options.pageSize + 1,
+                end = start + options.pageSize - 1;
 
             this._startNode.html(start);
-            this._endNode.html(end);
-            this._totalResultsNode.html(results.totalCount);
+            this._endNode.html(options.totalCount < end ? options.totalCount : end);
+            this._totalResultsNode.html(options.totalCount);
+
+            if (options.totalCount < options.pageSize) {
+                this._prevNode.hide();
+                this._nextNode.hide();
+            } else {
+                this._prevNode.show();
+                this._nextNode.show();
+            }
 
             if (start == 1)
-                this._prevNode.hide();
+                this._prevNode.addClass("disabled");
             else
-                this._prevNode.show();
+                this._prevNode.removeClass("disabled");
 
-            if (end >= results.totalCount)
-                this._nextNode.hide();
+            if (end >= options.totalCount)
+                this._nextNode.addClass("disabled");
             else
-                this._nextNode.show();
+                this._nextNode.removeClass("disabled");
 
-            this._currentResults = results;
+            this._currentOptions = options;
 
+        },
+
+        getPageNumber: function() {
+            if (this._currentOptions) {
+                return this._currentOptions.pageNumber;
+            }
+
+            return 0;
         },
 
         _prevClick: function() {
 
-            var results = this._currentResults;
+            var results = this._currentOptions;
 
             if (results.pageNumber > 0) {
 
-                this.trigger("pagechange", { pageNumber: results.pageNumber - 1 });
+                this._currentOptions.pageNumber--;
+
+                this.trigger("pagechange", { pageNumber: results.pageNumber });
 
             }
 
@@ -63,11 +81,13 @@ define([
 
         _nextClick: function() {
 
-            var results = this._currentResults;
+            var results = this._currentOptions;
 
             if (results.pageNumber < results.totalCount / results.pageSize) {
 
-                this.trigger("pagechange", { pageNumber: results.pageNumber + 1 });
+                this._currentOptions.pageNumber++;
+
+                this.trigger("pagechange", { pageNumber: results.pageNumber });
 
             }
 

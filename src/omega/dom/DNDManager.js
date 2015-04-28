@@ -12,7 +12,7 @@ define([
 
 			this.inherited(_Object, arguments);
 
-			this._dragContainer = $("<div />>")
+			this._dragContainer = $("<div />")
 				.addClass("ui-dragcontainer")
 				.hide()
 				.appendTo(document.body);

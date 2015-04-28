@@ -9,6 +9,7 @@ define([
 		initialize: function(options) {
 
 			this._eventHandlers = {};
+			this._mixinArgs = null;
 
 			this.options = utils.extend({}, this.options, options);
 			utils.extend(this, this.options);
@@ -92,6 +93,10 @@ define([
 		},
 
 		trigger: function(event, args) {
+
+			if (this._mixinArgs) {
+				args = utils.extend({}, args, this._mixinArgs);
+			}
 
 			if (this._eventTarget == null) {
 

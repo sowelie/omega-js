@@ -9,13 +9,17 @@ define([
 
     var FilterValue = _Widget.extend({
         templateString: "<div class=\"filterValue ui-button ui-button-primary ui-corner-all\">" +
-            "<span class=\"name\">{name}</span>: <span class=\"value\">{value}</span><span data-attach-point=\"closeNode\" class=\"ui-button-icon-primary ui-icon ui-icon-closethick close\"></span></div>",
+            "<span class=\"name\" data-attach-point=\"nameNode\">{name} :</span> <span class=\"value\">{value}</span><span data-attach-point=\"closeNode\" class=\"ui-button-icon-primary ui-icon ui-icon-closethick close\"></span></div>",
 
         startup: function() {
 
             this.inherited(_Widget, arguments);
 
             events.on(this._closeNode, "click", this._closeClick, this);
+
+            if (!this.name) {
+                this._nameNode.hide();
+            }
 
         },
 
@@ -37,7 +41,8 @@ define([
     return SearchTextBox.extend({
 
         options: {
-            placeholder: "Filter"
+            placeholder: "Filter",
+            singleValue: false
         },
 
         startup: function() {
@@ -63,6 +68,10 @@ define([
 
             events.on(this._domNode, "click", this._domClick, this);
             events.on(document, "click", this._documentClick, this);
+
+            if (this.singleValue) {
+                this.addClass("ui-filter-textbox-single-value");
+            }
 
         },
 
@@ -95,7 +104,7 @@ define([
 
             if (typeof(fields.forEach) == "function") {
                 var menu = this._menuNode,
-                    value = this.getValue().trim().toLowerCase();
+                    value = this.getDisplayedValue().trim().toLowerCase();
                 menu.clearItems();
 
                 fields.forEach(function(field) {
@@ -160,7 +169,7 @@ define([
                 var menu = this._menuNode;
                 menu.clearItems();
 
-                var value = this.getValue().trim().toLowerCase();
+                var value = this.getDisplayedValue().trim().toLowerCase();
 
                 values.forEach(function(valueName) {
                     if (valueName.label.toLowerCase().indexOf(value) != -1 || value.length == 0) {
@@ -177,8 +186,20 @@ define([
         },
 
         getValue: function() {
+            if (this.singleValue) {
+                if (this._values.length > 0) {
+                    return this._values[0];
+                } else {
+                    return null;
+                }
+            } else {
+                return this._values;
+            }
+        },
 
-            var value = this.inherited(arguments),
+        getDisplayedValue: function() {
+
+            var value = this.getRawValue(),
                 colonIndex = value.indexOf(":");
 
             if (colonIndex >= 0) {
@@ -200,14 +221,17 @@ define([
             this._addValue(this._currentField, e.menuItem.dataItem);
             this._currentField = null;
             this._menuNode.hide();
-            this.clear();
+            this.setValue("");
 
         },
 
         _addValue: function(field, value) {
 
             // create the filter value widget
-            var node = new FilterValue({ name: field.label, value: value.label });
+            var node = new FilterValue({
+                name: field ? field.label : "",
+                value: value.label
+            });
 
             node.on("removeclick", this._removeValueClick, this);
 
@@ -215,19 +239,46 @@ define([
             this._valueContainerNode.addChild(node);
 
             // keep track of all of the values
-            this._values.push({ field: field, value: value, domNode: node });
+            this._values.push({
+                field: field,
+                value: value,
+                domNode: node
+            });
 
             this._resize();
 
             this.trigger("filterchange", this._values);
 
+            this.addClass("ui-filter-textbox-with-value");
+
+            // if it is a single value filter, size the value appropriately
+            if (this.singleValue) {
+                node._domNode.outerWidth(this._domNode.width() - 8);
+            }
+
+        },
+
+        clear: function() {
+            this.inherited(arguments);
+
+            console.trace("CLEAR");
+
+            this._values.forEach(function(value) {
+
+                value.domNode.destroy();
+
+            });
+
+            this._values = [];
+            this._resize();
+            this.removeClass("ui-filter-textbox-with-value");
         },
 
         _removeValueClick: function(e) {
 
             this._values.some(function(value, index) {
 
-                if (value.field.label == e.name && value.value.label == e.value) {
+                if ((value.field == null || value.field.label == e.name) && value.value.label == e.value) {
 
                     // remove the dom node
                     value.domNode.destroy();
@@ -236,6 +287,10 @@ define([
                     this._values.splice(index, 1);
 
                     this._resize();
+
+                    if (this._values.length == 0) {
+                        this.removeClass("ui-filter-textbox-with-value");
+                    }
 
                     return true;
 

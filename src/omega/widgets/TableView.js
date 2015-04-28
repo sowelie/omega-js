@@ -50,6 +50,27 @@ define([
 
 		},
 
+        filter: function(filter) {
+            this.eachChild(function(row) {
+                var dataItem = row.data("dataItem"),
+                    isMatch = true;
+
+                for (var name in filter) {
+                    if (dataItem[name].indexOf(filter[name]) == -1) {
+                        isMatch = false;
+                    }
+                }
+
+                if (!isMatch) {
+                    row.hide();
+                }
+            }, this);
+        },
+
+        clearFilter: function() {
+            this._bodyNode.children().show();
+        },
+
 		addColumn: function(template, label, width, updateValue) {
 
 			this._columnTemplates.push({
@@ -176,6 +197,22 @@ define([
 
                 }
 
+				// find any child elements with an attach point
+				td.find("*[data-cell-attach-point]").each(function() {
+					var attachPoint = $(this).attr("data-cell-attach-point"),
+						widget = $(this);
+
+					if (widget.data("widget")) {
+						widget = widget.data("widget");
+
+						// make sure any events have helpful arguments
+						widget._mixinArgs = { tableViewItem: item };
+					}
+
+					// set the cell attach point
+					td["_" + attachPoint] = widget;
+				});
+
                 if (columnTemplate.width) {
 
                     td.css("width", columnTemplate.width + "px");
@@ -250,6 +287,7 @@ define([
 
 					var header = $("<th />")
 						.html(column.label)
+						.attr("title", column.label)
 						.data("columnTemplate", column)
 						.addClass("ui-button-inverse")
 						.appendTo(this._headerNode);

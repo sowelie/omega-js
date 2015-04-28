@@ -17,6 +17,7 @@ define([
 			this._shortcuts = [];
 			this._mixinTemplateStrings = [];
 			this._hasStarted = false;
+			this._globalShortcuts = false;
 
 		},
 
@@ -165,15 +166,6 @@ define([
 		},
 
 		_keyDown: function(e) {
-
-			// make sure an input element isn't focused
-			if ((e.target.tagName == "INPUT" || e.target.tagName == "SELECT" || e.target.tagName == "TEXTAREA")
-				&& !e.ctrlKey && !e.metaKey && e.keyCode != 27) {
-
-				return;
-
-			}
-
 			// get the key code
 			var keyCode = e.keyCode || e.which;
 			var keys = [];
@@ -193,6 +185,9 @@ define([
 
 			if (keyCode == 32)
 				keys.push("space");
+
+			if (keyCode == 13)
+				keys.push("enter");
 
 			var character = String.fromCharCode(keyCode).toLowerCase();
 
@@ -225,7 +220,11 @@ define([
 
 				}
 
-				events.on(document, "keydown", this._keyDown, this);
+				if (this._globalShortcuts) {
+					events.on(document, "keydown", this._keyDown, this);
+				} else {
+					events.on(this._domNode, "keydown", this._keyDown, this);
+				}
 
 			}
 
@@ -319,6 +318,10 @@ define([
 			if (scope) {
 				processedCallback = utils.bind(callback, scope);
 				processedCallback._originalCallback = callback;
+			}
+
+			if (!Array.isArray(keys)) {
+				keys = [keys];
 			}
 
 			this._shortcuts.push({ keys: keys, callback: processedCallback });

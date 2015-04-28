@@ -18,6 +18,7 @@ require([
     "omega/widgets/MenuItem",
     "omega/widgets/MessageContainer",
     "omega/widgets/NavBar",
+    "omega/widgets/Pager",
     "omega/widgets/ProgressBar",
     "omega/widgets/PushButton",
     "omega/widgets/RadioList",
