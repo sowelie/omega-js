@@ -13,7 +13,7 @@ define([
 			this.inherited(_Object, arguments);
 
 			this._dragContainer = $("<div />")
-				.addClass("ui-dragcontainer")
+				.addClass("dragcontainer")
 				.hide()
 				.appendTo(document.body);
 
@@ -82,7 +82,9 @@ define([
 
 		destroy: function() {
 
-			this.inherited(_Object, arguments);
+			this.inherited(arguments);
+
+			this._dragContainer.detach();
 
 			for (var dragId in this._sourceElements) {
 

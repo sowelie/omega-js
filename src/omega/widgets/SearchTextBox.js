@@ -16,9 +16,10 @@ define([
 
 		startup: function() {
 
-			this._domNode.addClass("ui-search-textbox");
+			this._domNode.addClass("search-textbox form-control");
 
 			this._clearNode = $("<span />").addClass("ui-clear tango edit-clear").appendTo(this._domNode);
+			this._textNode.removeClass("form-control");
 			this._searchIconNode = $("<span />").addClass("tango system-search").appendTo(this._domNode);
 
 			events.on(this._clearNode, "click", this._clearClick, this);

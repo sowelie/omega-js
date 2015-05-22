@@ -8,8 +8,8 @@ define([
 ], function(SearchTextBox, Menu, MenuItem, DOMWidget, events, _Widget) {
 
     var FilterValue = _Widget.extend({
-        templateString: "<div class=\"filterValue ui-button ui-button-primary ui-corner-all\">" +
-            "<span class=\"name\" data-attach-point=\"nameNode\">{name} :</span> <span class=\"value\">{value}</span><span data-attach-point=\"closeNode\" class=\"ui-button-icon-primary ui-icon ui-icon-closethick close\"></span></div>",
+        templateString: "<div class=\"filter-value label label-primary\">" +
+            "<span class=\"name\" data-attach-point=\"nameNode\">{name} :</span> <span class=\"value\">{value}</span><span data-attach-point=\"closeNode\" class=\"glyphicon glyphicon-remove close\"></span></div>",
 
         startup: function() {
 
@@ -59,10 +59,10 @@ define([
             this._menuNode.hide();
 
             // create the node that will contain selected filters
-            this._valueContainerNode = new DOMWidget({ nodeName: "div", className: "valueContainer" });
+            this._valueContainerNode = new DOMWidget({ nodeName: "div", className: "value-container" });
             this.addChild(this._valueContainerNode);
 
-            this._domNode.addClass("ui-filter-textbox ui-autocomplete-input");
+            this._domNode.addClass("filter-textbox");
 
             this.on("focus", this._searchKeyUp, this);
 
@@ -70,7 +70,7 @@ define([
             events.on(document, "click", this._documentClick, this);
 
             if (this.singleValue) {
-                this.addClass("ui-filter-textbox-single-value");
+                this.addClass("filter-textbox-single-value");
             }
 
         },
@@ -249,7 +249,7 @@ define([
 
             this.trigger("filterchange", this._values);
 
-            this.addClass("ui-filter-textbox-with-value");
+            this.addClass("filter-textbox-with-value");
 
             // if it is a single value filter, size the value appropriately
             if (this.singleValue) {
@@ -271,7 +271,7 @@ define([
 
             this._values = [];
             this._resize();
-            this.removeClass("ui-filter-textbox-with-value");
+            this.removeClass("filter-textbox-with-value");
         },
 
         _removeValueClick: function(e) {
@@ -289,7 +289,7 @@ define([
                     this._resize();
 
                     if (this._values.length == 0) {
-                        this.removeClass("ui-filter-textbox-with-value");
+                        this.removeClass("filter-textbox-with-value");
                     }
 
                     return true;

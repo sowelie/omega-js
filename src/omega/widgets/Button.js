@@ -21,10 +21,10 @@ define([
 			this.setIcon(this.icon);
 			this.setLabel(this.label || this._containerNode.html());
 
-			this._domNode.addClass("ui-button-up");
+			this._domNode.addClass("btn-up");
 
 			if (this.inline)
-				this._domNode.addClass("ui-button-inline");
+				this._domNode.addClass("btn-inline");
 
 			if (typeof(this.enabled) != "undefined")
 				this.setEnabled(this.enabled);
@@ -75,12 +75,12 @@ define([
 
 			if (icon) {
 				if (this.iconPosition)
-					this._domNode.addClass("ui-button-icon-" + this.iconPosition);
+					this._domNode.addClass("btn-icon-" + this.iconPosition);
 
 				this._iconNode.addClass(icon);
-				this._domNode.removeClass("ui-button-text-only");
+				this._domNode.removeClass("btn-text-only");
 			} else {
-				this._domNode.addClass("ui-button-text-only");
+				this._domNode.addClass("btn-text-only");
 			}
 		},
 
@@ -91,11 +91,11 @@ define([
 		setLabel: function(label) {
 
 			if (label) {
-				this._domNode.removeClass("ui-button-icon-notext");
-				this._domNode.removeClass("ui-button-icon-only");
+				this._domNode.removeClass("btn-icon-notext");
+				this._domNode.removeClass("btn-icon-only");
 			} else {
-				this._domNode.addClass("ui-button-icon-notext");
-				this._domNode.addClass("ui-button-icon-only");
+				this._domNode.addClass("btn-icon-notext");
+				this._domNode.addClass("btn-icon-only");
 			}
 
 			this._containerNode.html(label);
@@ -113,9 +113,9 @@ define([
 		setActivated: function(value) {
 
 			if (value)
-				this._domNode.addClass("ui-button-primary");
+				this._domNode.addClass("btn-primary");
 			else
-				this._domNode.removeClass("ui-button-primary");
+				this._domNode.removeClass("btn-primary");
 
 		},
 

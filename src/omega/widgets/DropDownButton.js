@@ -34,17 +34,17 @@ define([
 			// add a class if there is no text
 			if (!this._labelNode.html().trim()) {
 
-				this._domNode.addClass("ui-button-icon-only");
-				this._domNode.removeClass("ui-button-icon-" + this.iconPosition);
+				this._domNode.addClass("btn-icon-only");
+				this._domNode.removeClass("btn-icon-" + this.iconPosition);
 
 				// icon position
 			} else {
 
-				this._domNode.removeClass("ui-button-icon-only");
+				this._domNode.removeClass("btn-icon-only");
 
 				if (this.icon && this.iconPosition) {
 
-					this._domNode.addClass("ui-button-icon-" + this.iconPosition);
+					this._domNode.addClass("btn-icon-" + this.iconPosition);
 
 				}
 			}
@@ -66,7 +66,7 @@ define([
 
 			this._labelNode.html(label);
 
-			this._domNode.removeClass("ui-button-icon-only");
+			this._domNode.removeClass("btn-icon-only");
 
 		},
 

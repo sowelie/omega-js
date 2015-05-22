@@ -28,12 +28,12 @@ define([
 			// set up the icon
 			if (this.icon) {
 				this._secondaryIconNode.addClass(this.icon);
-				this._domNode.addClass("ui-has-icon");
+				this._domNode.addClass("has-icon");
 			} else
 				this._secondaryIconNode.hide();
 
 			if (this.hasChildren === false)
-				this._domNode.addClass("ui-no-children");
+				this._domNode.addClass("no-children");
 
 			// check to see if the node should be expanded
 			if (this._getPersistentState() && !this.isOpen())
@@ -47,7 +47,7 @@ define([
 			// check to see if checkboxes should be enabled
 			if (this.rootNode.checkBoxes) {
 
-				this._domNode.addClass("ui-treeview-node-checkbox");
+				this._domNode.addClass("treeview-node-checkbox");
 
 				var checkbox = new CheckBox({ name: "treeview" });
 				checkbox.startup();
@@ -156,7 +156,7 @@ define([
 
 		isOpen: function() {
 
-			return this._domNode.hasClass("ui-treeview-node-open");
+			return this._domNode.hasClass("treeview-node-open");
 
 		},
 
@@ -177,23 +177,20 @@ define([
 		_updateExpandState: function(expand) {
 
 			if (expand) {
-
 				this._updatePersistentState(true);
 
-				this._domNode.addClass("ui-treeview-node-open");
-				this._primaryIconNode.removeClass("ui-icon-loading");
-				this._primaryIconNode.addClass("ui-icon-triangle-1-s");
-				this._primaryIconNode.removeClass("ui-icon-triangle-1-e");
+				this._domNode.addClass("treeview-node-open");
+				this._primaryIconNode.removeClass("icon-loading");
+				this._primaryIconNode.addClass("glyphicon-chevron-down");
+				this._primaryIconNode.removeClass("glyphicon-chevron-right");
 
 			} else {
-
 				this._updatePersistentState(false);
 
-				this._domNode.removeClass("ui-treeview-node-open");
-				this._primaryIconNode.removeClass("ui-icon-loading");
-				this._primaryIconNode.removeClass("ui-icon-triangle-1-s");
-				this._primaryIconNode.addClass("ui-icon-triangle-1-e");
-
+				this._domNode.removeClass("treeview-node-open");
+				this._primaryIconNode.removeClass("icon-loading");
+				this._primaryIconNode.removeClass("glyphicon-chevron-down");
+				this._primaryIconNode.addClass("glyphicon-chevron-right");
 			}
 
 		},
@@ -323,9 +320,9 @@ define([
 			}, this);
 
 			// show the loading icon
-			this._primaryIconNode.removeClass("ui-icon-triangle-1-e");
-			this._primaryIconNode.removeClass("ui-icon-triangle-1-s");
-			this._primaryIconNode.addClass("ui-icon-loading");
+			this._primaryIconNode.removeClass("glyphicon-chevron-down");
+			this._primaryIconNode.removeClass("glyphicon-chevron-right");
+			this._primaryIconNode.addClass("icon-loading");
 
 			// check to see if the tree node has been loaded
 			if (this.loaded)
@@ -384,11 +381,11 @@ define([
 
 		setSelected: function(selected) {
 
-			this.rootNode._domNode.find(".ui-state-focus").removeClass("ui-state-focus");
+			this.rootNode._domNode.find(".active").removeClass("active");
 
 			if (selected) {
 
-				this._wrapperNode.addClass("ui-state-focus");
+				this._wrapperNode.addClass("active");
 
 				// store the selected item
 				this.rootNode.selectedItem = this.dataItem;

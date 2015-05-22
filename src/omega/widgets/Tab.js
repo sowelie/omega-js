@@ -29,7 +29,7 @@ define([
 
 			this.inherited(_Widget, arguments);
 
-			this._headerNode.addClass("ui-tabs-active ui-state-active");
+			this._headerNode.addClass("active");
 			this.trigger("show", this);
 
 		},

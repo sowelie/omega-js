@@ -17,7 +17,7 @@ define([
 
 		startup: function() {
 
-			_Widget.prototype.startup.apply(this, arguments);
+			this.inherited(arguments);
 
 			// set up any list items
 			var items = this._domNode.find("> li");
@@ -42,6 +42,14 @@ define([
 
 			}, this));
 
+		},
+
+		destroy: function() {
+			this.inherited(arguments);
+
+			if (this._dragManager) {
+				this._dragManager.destroy();
+			}
 		},
 
 		getSelectedItem: function() {
@@ -72,7 +80,7 @@ define([
 
 		getSelectedIndex: function() {
 
-			return this._domNode.find("> li.ui-selected").index();
+			return this._domNode.find("> .active").index();
 
 		},
 
@@ -224,17 +232,17 @@ define([
                 verticalDiffTop = mousePosition.y - targetPosition.top;
 
             // clear all classes
-            e.target.removeClass("ui-dragtarget-above ui-dragtarget-below");
+            e.target.removeClass("dragtarget-above dragtarget-below");
 
             if (verticalDiffTop < 5) {
-                targetNode.addClass("ui-dragtarget-above");
+                targetNode.addClass("dragtarget-above");
             } else if (verticalDiffBottom < 5) {
-                targetNode.addClass("ui-dragtarget-below");
+                targetNode.addClass("dragtarget-below");
             }
         },
 
         _dragOut: function(e) {
-            e.target.removeClass("ui-dragtarget-above ui-dragtarget-below");
+            e.target.removeClass("dragtarget-above dragtarget-below");
         },
 
         _dragEnd: function(e) {
@@ -245,7 +253,7 @@ define([
                 oldIndex = sourceElement.index();
 
             // if the element is going below the target, add one to the new index
-            if (targetElement.hasClass("ui-dragtarget-below")) {
+            if (targetElement.hasClass("dragtarget-below")) {
                 newIndex++;
                 targetElement.after(sourceElement);
             } else {
@@ -254,7 +262,7 @@ define([
 
             this.log("MOVE", sourceElement, targetElement, oldIndex, newIndex);
 
-            e.target.removeClass("ui-dragtarget-above ui-dragtarget-below");
+            e.target.removeClass("dragtarget-above dragtarget-below");
 
             this.trigger("moveitem", {
                 item: sourceWidget,

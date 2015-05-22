@@ -66,9 +66,9 @@ define([
 		addChild: function(tab) {
 
 			var tabCount = this._childWidgets.length,
-				header = $("<li />").addClass("ui-state-default ui-corner-top").appendTo(this._headerNode);
+				header = $("<li />").appendTo(this._headerNode);
 
-			header.append($("<a />").addClass("ui-tabs-anchor").html(tab.title));
+			header.append($("<a />").html(tab.title));
 
 			// store the header node
 			tab._headerNode = header;
@@ -78,14 +78,12 @@ define([
 			this._containerNode.append(tab._domNode);
 
 			tab.hide();
-			tab.addClass("ui-tab-body");
+			tab.addClass("tab-body");
 			tab.on("click", this._tabClick, this);
 			tab.on("show", this._tabShow, this);
 
 			if (tabCount == 0) {
-
 				tab.show();
-
 			}
 
 			this.inherited(arguments);
@@ -128,8 +126,8 @@ define([
 
 		_tabClick: function(tab) {
 
-			this._headerNode.find(".ui-tabs-active").removeClass("ui-tabs-active ui-state-active");
-			this._containerNode.children(".ui-tab-body").hide();
+			this._headerNode.find(".active").removeClass("active");
+			this._containerNode.children(".tab-body").hide();
 
 			this._selectedTab = tab;
 

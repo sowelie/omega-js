@@ -62,10 +62,10 @@ define([
 		},
 
 		setSelectedIndex: function(index) {
-			this._domNode.find("a.ui-state-focus").removeClass("ui-state-focus");
+			this._domNode.find(".active").removeClass(".active");
 
 			if (index >= 0 && index < this._childWidgets.length) {
-				this._childWidgets[index].find("a").addClass("ui-state-focus");
+				this._childWidgets[index].find("a").addClass(".active");
 			}
 		},
 
@@ -73,7 +73,7 @@ define([
 			// find the selected item
 			this.eachChild(function(child) {
 
-				if (child.find("a").hasClass("ui-state-focus")) {
+				if (child.find("a").hasClass("active")) {
 					child._click();
 				}
 

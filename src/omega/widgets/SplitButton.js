@@ -158,7 +158,7 @@ function(_Widget, $, Menu, MenuItem, utils, events, template) {
 
 		isActivated: function() {
 
-			return this._labelNode.hasClass("ui-button-primary");
+			return this._labelNode.hasClass("btn-primary");
 
 		},
 
@@ -166,13 +166,13 @@ function(_Widget, $, Menu, MenuItem, utils, events, template) {
 
 			if (value) {
 
-				this._labelNode.addClass("ui-button-primary");
-				this._menuButtonNode.addClass("ui-button-primary");
+				this._labelNode.addClass("btn-primary");
+				this._menuButtonNode.addClass("btn-primary");
 
 			} else {
 
-				this._labelNode.removeClass("ui-button-primary");
-				this._menuButtonNode.removeClass("ui-button-primary");
+				this._labelNode.removeClass("btn-primary");
+				this._menuButtonNode.removeClass("btn-primary");
 
 			}
 

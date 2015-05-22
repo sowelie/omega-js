@@ -11,7 +11,8 @@ define([
 	"demo/widgets/ProgressBar",
 	"demo/widgets/Dialogs",
     "demo/widgets/FilterTextBox",
-    "demo/widgets/DragAndDrop"
+    "demo/widgets/DragAndDrop",
+	"demo/widgets/TreeView"
 ], function(BorderContainer, events, template) {
 
 	return BorderContainer.extend({

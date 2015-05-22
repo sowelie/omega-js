@@ -33,13 +33,11 @@ define([
 
 			if (value) {
 
-				this._domNode.addClass("ui-selected");
-				this._containerNode.addClass("ui-state-focus");
+				this._domNode.addClass("active");
 
 			} else {
 
-				this._domNode.removeClass("ui-selected");
-				this._containerNode.removeClass("ui-state-focus");
+				this._domNode.removeClass("active");
 
 			}
 

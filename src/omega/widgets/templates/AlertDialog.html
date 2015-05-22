@@ -1,8 +1,9 @@
-<div class="alertDialog">
-	<div data-mixin-attach-point="borderNode" data-layout-position="center" data-attach-point="messageNode">{message}</div>
-	<div data-mixin-attach-point="borderNode" data-layout-position="bottom" class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+<div class="alertDialog" data-mixin-attach-point="containerNode">
+	<div class="modal-body">{message}</div>
+	<div class="modal-footer">
 		<span class="right">
-			<button class="ui-button-primary" data-widget-class="omega/widgets/Button" data-attach-point="okayButtonNode" class="ui-button-primary">Okay</button>
+			<button data-widget-class="omega/widgets/Button"
+			        data-attach-point="okayButtonNode" class="btn-primary">Okay</button>
 		</span>
 	</div>
 </div>

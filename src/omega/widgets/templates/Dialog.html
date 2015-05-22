@@ -1,22 +1,21 @@
-<div class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-front ui-dialog-buttons ui-draggable ui-resizable">
+<div class="modal-dialog" data-attach-point="modalContainerNode">
+	<div class="modal-content" data-attach-point="modalContentNode">
+		<div class="modal-header" data-attach-point="titleNode">
+			<button data-attach-point="closeNode" class="close" role="button" aria-disabled="false" title="close">
+				<span>&times;</span>
+			</button>
+			<h4 class="modal-title">{title}</h4>
+		</div>
 
-	<div class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix" data-attach-point="titleNode">
-		<span class="ui-dialog-title">{title}</span>
-		<button data-attach-point="closeNode" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only ui-dialog-titlebar-close" role="button" aria-disabled="false" title="close">
-			<span class="ui-button-icon-primary ui-icon ui-icon-closethick"></span>
-			<span class="ui-button-text">close</span>
-		</button>
+		<div data-attach-point="containerNode">{content}</div>
+
+		<div class="ui-resizable-handle ui-resizable-n"></div>
+		<div class="ui-resizable-handle ui-resizable-e"></div>
+		<div class="ui-resizable-handle ui-resizable-s"></div>
+		<div class="ui-resizable-handle ui-resizable-w"></div>
+		<div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se"></div>
+		<div class="ui-resizable-handle ui-resizable-sw"></div>
+		<div class="ui-resizable-handle ui-resizable-ne"></div>
+		<div class="ui-resizable-handle ui-resizable-nw"></div>
 	</div>
-
-	<div class="ui-body" data-attach-point="containerNode">{content}</div>
-
-	<div class="ui-resizable-handle ui-resizable-n"></div>
-	<div class="ui-resizable-handle ui-resizable-e"></div>
-	<div class="ui-resizable-handle ui-resizable-s"></div>
-	<div class="ui-resizable-handle ui-resizable-w"></div>
-	<div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se"></div>
-	<div class="ui-resizable-handle ui-resizable-sw"></div>
-	<div class="ui-resizable-handle ui-resizable-ne"></div>
-	<div class="ui-resizable-handle ui-resizable-nw"></div>
-
 </div>

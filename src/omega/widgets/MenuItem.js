@@ -16,7 +16,7 @@ define([
 
 			events.on(this._domNode, "mouseenter", this._mouseEnter, this);
 			events.on(this._domNode, "mouseleave", this._mouseLeave, this);
-			events.on(this._containerNode, "click", this._click, this);
+			events.on(this._domNode, "click", this._click, this);
 
 			if (this.label)
 				this.setLabel(this.label);
@@ -32,7 +32,7 @@ define([
 
 			events.off(this._domNode, "mouseenter", this._mouseEnter, this);
 			events.off(this._domNode, "mouseleave", this._mouseLeave, this);
-			events.off(this._containerNode, "click", this._click, this);
+			events.off(this._domNode, "click", this._click, this);
 
 		},
 
@@ -98,8 +98,6 @@ define([
 
 		_mouseEnter: function() {
 
-			this._containerNode.addClass("ui-state-focus");
-
 			if (this._menuNode) {
 				this._menuNode.show();
 				this._menuNode.css("left", this._domNode.width());
@@ -109,8 +107,6 @@ define([
 		},
 
 		_mouseLeave: function() {
-
-			this._containerNode.removeClass("ui-state-focus");
 
 			if (this._menuNode)
 				this._menuNode.hide();

@@ -57,7 +57,7 @@ define([
 
 		getSelectedNode: function() {
 
-			var element = this._domNode.find(".ui-state-focus");
+			var element = this._domNode.find(".active");
 
 			if (element)
 				return parser.get(element.parent());

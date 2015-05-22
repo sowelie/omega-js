@@ -46,13 +46,15 @@ define([
 			// complete the creation of the DOM node
 			this.inherited(_Widget, arguments);
 
-			if (!this.movable)
-				this._domNode.removeClass("ui-draggable");
+			if (!this.movable) {
+				this._domNode.removeClass("draggable");
+			}
 
 			this._originalZIndex = parseInt(this._domNode.css("z-index"));
 
-			if (isNaN(this._originalZIndex))
+			if (isNaN(this._originalZIndex)) {
 				this._originalZIndex = 999;
+			}
 
 			events.on(this._closeNode, "click", this._closeClick, this);
 
@@ -72,102 +74,79 @@ define([
 		},
 
 		update: function() {
-
 			// check to ensure a backdrop exists on the page
 			if (this.showBackdrop) {
-
 				this._initBackdrop();
-
 			}
 
-			if (!this.closable)
+			if (!this.closable) {
 				this._closeNode.hide();
+			}
 
 			if (this.fullScreen) {
-
 				this._resize();
 				events.on(window, "resize", this._resize, this);
-
+				this.addClass("modal-fullscreen");
+			} else {
+				this.removeClass("modal-fullscreen");
 			}
 
 			if (this.sizable) {
-
-				var handles = this._domNode.find(".ui-resizable-handle");
+				var handles = this._domNode.find(".resizable-handle");
 
 				events.on(handles, "mousedown", this._sizeHandleMouseDown, this);
 				events.on(document, "mousemove", this._sizeHandleMouseMove, this);
 				events.on(document, "mouseup", this._sizeHandleMouseUp, this);
-
 			} else {
-
-				this._domNode.find(".ui-resizable-handle").hide();
-
+				this._domNode.find(".resizable-handle").hide();
 			}
 
 			if (this.movable) {
-
 				this._draggable = new Draggable({ domNode: this._domNode, targetNode: this._titleNode });
-
 			} else if (this._draggable) {
-
 				this._draggable.destroy();
-
 			}
-
 		},
 
 		show: function() {
-
 			if (!this._startupComplete) {
-
 				this.startup();
-
 			}
 
 			if (this.adjustZIndex) {
-
 				var dialogZIndex = (lastDialogZIndex + 2),
 					newBackdropZIndex = lastDialogZIndex + 1;
 
 				if (this._backdropNode) {
-
 					totalDisplayedDialogs++;
 
 					this._backdropNode.css("z-index", newBackdropZIndex);
 
 					lastDialogZIndex = dialogZIndex;
-
 				}
 
 				this._domNode.css("z-index", dialogZIndex);
-
 			}
 
 			if (this._backdropNode) {
-
 				this._backdropNode.show();
-
 			}
 
 			// position the dialog based on its size
 			if (this.autoPosition) {
-
 				this.updatePosition();
-
 			}
 
 			$(document.body).addClass("dialogOpen");
 
-			this._domNode.addClass("ui-dialog-visible");
+			this._domNode.addClass("modal-visible");
 
 		},
 
 		hide: function() {
-
 			this.trigger("hide", this);
 
 			if (this._backdropNode) {
-
 				lastDialogZIndex -= 2;
 				totalDisplayedDialogs--;
 
@@ -178,32 +157,30 @@ define([
 
 				if (this.adjustZIndex)
 					this._backdropNode.css("z-index", lastDialogZIndex - 1);
-
 			}
 
-			this._domNode.removeClass("ui-dialog-visible");
+			this._domNode.removeClass("modal-visible");
 
-			if (this.destroyOnHide)
+			if (this.destroyOnHide) {
 				this.destroy();
-
+			}
 		},
 
 		destroy: function() {
 
-			if (this._draggable)
+			if (this._draggable) {
 				this._draggable.destroy();
+			}
 
 			events.off(this._closeNode, "click", this._closeClick, this);
 			events.off(window, "resize", this._resize, this);
 
 			if (this.sizable) {
-
-				var handles = this._domNode.find(".ui-resizable-handle");
+				var handles = this._domNode.find(".resizable-handle");
 
 				events.off(handles, "mousedown", this._sizeHandleMouseDown, this);
 				events.off(document, "mousemove", this._sizeHandleMouseMove, this);
 				events.off(document, "mouseup", this._sizeHandleMouseUp, this);
-
 			}
 
 			_Widget.prototype.destroy.apply(this, arguments);
@@ -211,22 +188,16 @@ define([
 		},
 
 		setTitle: function(title) {
-
-			this._titleNode.find(".ui-dialog-title").html(title);
-
+			this._titleNode.find("h4").html(title);
 		},
 
 		updatePosition: function() {
-
 			var dockOn = this.dockOn;
 
 			if (this.fullScreen) {
-
 				this._domNode.css("top", $(window).scrollTop() - 2);
 				this._domNode.css("left", -2);
-
 			} else if (dockOn) {
-
 				var restriction = "",
 					viewport = $(window),
 					fullWidth = false,
@@ -244,61 +215,47 @@ define([
 				this._overridePosition = true;
 
 				if (dockOn == "top") {
-
 					// only allow resizing from the bottom
 					restriction = "s";
 					fullWidth = true;
 					top = headerNode.outerHeight();
 					left = 0;
-
 				} else if (dockOn == "right") {
-
 					// only allow resizing from the left
 					restriction = "w";
 					fullHeight = true;
 					top = headerNode.outerHeight();
 					right = 0;
-
 				} else if (dockOn == "bottom") {
-
 					// only allow resizing from the top
 					restriction = "n";
 					fullWidth = true;
 					bottom = footerNode.outerHeight();
 					left = 0;
-
 				} else if (dockOn == "left") {
-
 					// only allow resizing from the right
 					restriction = "e";
 					fullHeight = true;
 					top = headerNode.outerHeight();
 					left = 0;
-
 				}
 
 				this.resizeRestriction = restriction;
 
 				if (fullWidth) {
-
 					domNode.width(Math.round(viewport.width()));
 					this._containerNode.width(Math.round(domNode.width()));
-
 				} else if (settings) {
-
 					this.log(settings.width);
 
 					this._containerNode.css("width", settings.width);
-
 				}
 
 				if (fullHeight) {
-
 					var offset = headerNode.outerHeight() + footerNode.outerHeight();
 
 					domNode.height(Math.round(viewport.height() - offset));
 					this._containerNode.height(Math.round(domNode.height() - this._titleNode.outerHeight() - offset));
-
 				} else if (settings) {
 
 					this._containerNode.css("height", settings.height);
@@ -338,16 +295,12 @@ define([
 		},
 
 		_initBackdrop: function() {
-
-			this._backdropNode = $("#ui-backdrop");
+			this._backdropNode = $("#modal-backdrop");
 
 			if (this._backdropNode.length == 0) {
-
-				this._backdropNode = $("<div />").addClass("ui-backdrop").attr("id", "ui-backdrop").appendTo(document.body);
+				this._backdropNode = $("<div />").addClass("modal-backdrop").attr("id", "modal-backdrop").appendTo(document.body);
 				originalBackdropZIndex = parseInt(this._backdropNode.css("z-index"));
-
 			}
-
 		},
 
 		_closeClick: function() {
@@ -365,17 +318,12 @@ define([
 				handle = "";
 
 			classes.forEach(function(className) {
-
-				if (className != "ui-resizable-handle" && className.indexOf("ui-resizable-") == 0) {
-
-					handle = className.replace("ui-resizable-", "");
-
+				if (className != "resizable-handle" && className.indexOf("resizable-") == 0) {
+					handle = className.replace("resizable-", "");
 				}
-
 			});
 
 			if (!this.resizeRestriction || this.resizeRestriction == handle) {
-
 				this._sizeInfo = {
 					position: this._domNode.position(),
 					mousePosition: { x: e.clientX, y: e.clientY },
@@ -385,17 +333,13 @@ define([
 				};
 
 				this._moving = true;
-
 			}
 
 			return false;
-
 		},
 
 		_sizeHandleMouseMove: function(e) {
-
 			if (this._moving) {
-
 				var info = this._sizeInfo,
 					handle = info.handle,
 					body = this._containerNode,

@@ -289,7 +289,7 @@ define([
 						.html(column.label)
 						.attr("title", column.label)
 						.data("columnTemplate", column)
-						.addClass("ui-button-inverse")
+						.addClass("btn-inverse")
 						.appendTo(this._headerNode);
 
 					if (column.width) {

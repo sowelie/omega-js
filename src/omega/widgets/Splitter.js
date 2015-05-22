@@ -6,7 +6,7 @@ define([
 
 	return _Widget.extend({
 
-		templateString: "<div class=\"ui-splitter ui-splitter-{orientation}\"></div>",
+		templateString: "<div class=\"splitter splitter-{orientation}\"></div>",
 		options: {
 			orientation: "horizontal"
 		},
