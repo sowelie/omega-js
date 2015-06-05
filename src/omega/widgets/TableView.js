@@ -13,7 +13,8 @@ define([
 		templateString: template,
 
 		options: {
-			displayHeaders: true
+			displayHeaders: true,
+			allowSelect: true
 		},
 
 		initialize: function() {
@@ -256,11 +257,13 @@ define([
 
 		_setSelectedRow: function(row) {
 
-			this._bodyNode.find("tr.ui-state-focus").removeClass("ui-state-focus");
+			if (this.allowSelect) {
+				this._bodyNode.find("tr.ui-state-focus").removeClass("ui-state-focus");
 
-			row.addClass("ui-state-focus");
+				row.addClass("ui-state-focus");
 
-			this.trigger("itemselected", { dataItem: row.data("dataItem"), row: row });
+				this.trigger("itemselected", {dataItem: row.data("dataItem"), row: row});
+			}
 
 		},
 

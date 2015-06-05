@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Omega JS Test page</title>
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/jquery-ui-1.10.0.custom.css" />
+    <link rel="stylesheet" type="text/css" href="../css/omega.css" />
+    <script type="text/javascript" src="../bower_components/requirejs/require.js"></script>
+    <script type="text/javascript" src="../src/omega/config.dev.js"></script>
+    <script type="text/javascript">
+        require([
+                "jquery",
+                "omega/widgets/TableView",
+                "omega/_Widget"
+        ], function($, TableView, _Widget) {
+            $("button").on("click", function() {
+                var start = new Date().getTime(),
+                        widgets = [],
+                        data = [];
+
+                for (var row = 0; row < 100; row++) {
+                    data.push("Test Row " + row);
+                }
+
+                for (var i = 0; i < 1; i++) {
+                    var widget = new TableView();
+                    widget.startup();
+                    widget.addColumn("$name$", "Name");
+                    widget.bind(data);
+                    widgets.push(widget);
+                }
+
+                widgets.forEach(function (widget) {
+                    widget.destroy();
+                });
+
+                console.log("Took " + (new Date().getTime() - start) + "ms");
+            });
+        });
+    </script>
+</head>
+<body>
+    <button>Click Me</button>
+</body>
+</html>

@@ -18,6 +18,7 @@ define([
 			this._mixinTemplateStrings = [];
 			this._hasStarted = false;
 			this._globalShortcuts = false;
+			this._enableShortcutKeys = false;
 
 		},
 
@@ -220,10 +221,12 @@ define([
 
 				}
 
-				if (this._globalShortcuts) {
-					events.on(document, "keydown", this._keyDown, this);
-				} else {
-					events.on(this._domNode, "keydown", this._keyDown, this);
+				if (this._enableShortcutKeys) {
+					if (this._globalShortcuts) {
+						events.on(document, "keydown", this._keyDown, this);
+					} else {
+						events.on(this._domNode, "keydown", this._keyDown, this);
+					}
 				}
 
 			}
@@ -242,7 +245,13 @@ define([
 
 			}
 
-			events.off(document, "keydown", this._keyDown, this);
+			if (this._enableShortcutKeys) {
+				if (this._globalShortcuts) {
+					events.off(document, "keydown", this._keyDown, this);
+				} else {
+					events.off(this._domNode, "keydown", this._keyDown, this);
+				}
+			}
 
 			this._childWidgets = [];
 
@@ -425,7 +434,7 @@ define([
 
 		html: function(innerHTML) {
 
-			this._domNode.html(innerHTML);
+			return this._domNode.html.apply(this._domNode, arguments);
 
 		},
 

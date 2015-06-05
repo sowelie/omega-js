@@ -28,9 +28,7 @@ define(["omega/utils", "jquery"], function(utils, $) {
 				method._eventHandlers = handlers;
 
 			} else {
-
 				target.bind(event, method);
-
 			}
 
 		},
@@ -71,8 +69,9 @@ define(["omega/utils", "jquery"], function(utils, $) {
 
 				}, this);
 
-			} else
+			} else {
 				target.unbind(event, method);
+			}
 
 		},
 

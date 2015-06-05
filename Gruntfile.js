@@ -55,7 +55,9 @@ module.exports = function(grunt) {
                     { expand: true, src: ['bower_components/jquery/jquery.min.js'], dest: "dist/" }
                 ]
             }
-        }
+        },
+
+
     });
 
     // Default task(s).

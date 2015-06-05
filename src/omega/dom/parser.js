@@ -15,9 +15,6 @@ function($, utils) {
 			else
 				$node = $(node);
 
-			// first parse the element itself
-			this._parseElement(node);
-
 			// parse any children
 			$node.find("*[data-widget-class]").each(utils.bind(function(index, element) {
 
@@ -65,8 +62,6 @@ function($, utils) {
 
 					// parse any child widgets
 					this.parse(widget._domNode, widget);
-
-					widget.log("CONTAINER", widget._containerNode);
 
 					// check to see if the widget has any content, and if it has a "containerNode"
 					if (widget._containerNode) {
