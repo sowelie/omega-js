@@ -1,8 +1,9 @@
 define([
 	"omega/_Widget",
 	"omega/dom/events",
+    "jquery",
 	"text!./templates/Tooltip.html"
-], function(_Widget, events, template) {
+], function(_Widget, events, $, template) {
 
 	return _Widget.extend({
 

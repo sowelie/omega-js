@@ -18,7 +18,7 @@ define([
 
 			this._domNode.addClass("search-textbox form-control");
 
-			this._clearNode = $("<span />").addClass("ui-clear tango edit-clear").appendTo(this._domNode);
+			this._clearNode = $("<span />").addClass("clear tango edit-clear").appendTo(this._domNode);
 			this._textNode.removeClass("form-control");
 			this._searchIconNode = $("<span />").addClass("tango system-search").appendTo(this._domNode);
 

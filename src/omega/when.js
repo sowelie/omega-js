@@ -1,41 +1,95 @@
 define([
-	"./utils",
-	"./promise"
-], function(utils, promise) {
+    "omega/utils",
+    "omega/promise",
+    "omega/_Object"
+], function(utils, promise, _Object) {
 
-	return {
+    var dynamicWhen = _Object.extend({
 
-		all: function() {
+        initialize: function() {
 
-			var promises = arguments,
-				result = promise(),
-				completedCount = 0;
+            this.inherited(_Object, arguments);
 
-			if (arguments.length == 1 && arguments[0].length) {
+            this.promiseCount = 0;
+            this.completedCount = 0;
+            this.promises = [];
+            this.responses = [];
+            this.promise = promise();
 
-				promises = arguments[0];
+        },
 
-			}
+        push: function(promise) {
 
-			for (var index = 0; index < promises.length; index++) {
+            this.promises.push(promise);
+            this.promiseCount++;
 
-				var prom = promises[index];
+            promise.then(function(response) {
 
-				prom.then(function() {
+                this.completedCount++;
 
-					completedCount++;
+                this.responses.push(response);
 
-					if (completedCount >= promises.length)
-						result.resolve();
+                if (this.completedCount >= this.promiseCount)
+                    this.promise.resolve(this.responses);
 
-				});
+            }, this);
 
-			};
+        },
 
-			return result;
+        then: function() {
 
-		}
+            this.promise.then.apply(this.promise, arguments);
 
-	}
+        }
+
+    });
+
+    return {
+
+        all: function() {
+
+            var promises = arguments,
+                result = promise(),
+                completedCount = 0,
+                totalCount = promises.length,
+                responses = [];
+
+            // check to see if the first argument is an array
+            if (typeof(arguments[0]) == "object" && arguments[0].length) {
+
+                promises = arguments[0];
+                totalCount = promises.length;
+
+            }
+
+            for (var index = 0; index < totalCount; index++) {
+
+                var prom = promises[index];
+
+                prom.then(function(response) {
+
+                    completedCount++;
+
+                    if (response)
+                        responses.push(response);
+
+                    if (completedCount >= totalCount)
+                        result.resolve(responses);
+
+                });
+
+            };
+
+            return result;
+
+        },
+
+        promiseList: function() {
+
+            return new dynamicWhen();
+
+        }
+
+    }
 
 });

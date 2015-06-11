@@ -9,16 +9,15 @@ define([
 
 		addError: function(message, animate) {
 
-			this._domNode.removeClass("ui-state-highlight");
-
-			this._domNode.addClass("ui-state-error");
+			this._domNode.removeClass("alert-info");
+			this._domNode.addClass("alert-danger");
 
 			if (animate)
 				this._domNode.fadeIn();
 			else
 				this._domNode.show();
 
-			this._domNode.append("<p><span class=\"ui-icon ui-icon-alert\" style=\"float: left; margin-right: .3em;\"></span>" + message + "</p>");
+			this._domNode.append("<p><span class=\"glyphicon glyphicon-exclamation-sign\" style=\"float: left; margin-right: .3em;\"></span>" + message + "</p>");
 
 		},
 
@@ -34,23 +33,22 @@ define([
 
 		addInfo: function(message, animate) {
 
-			this._domNode.removeClass("ui-state-error");
-
-			this._domNode.addClass("ui-state-highlight");
+			this._domNode.removeClass("alert-danger");
+			this._domNode.addClass("alert-info");
 
 			if (animate)
 				this._domNode.fadeIn();
 			else
 				this._domNode.show();
 
-			this._domNode.append("<p><span class=\"ui-icon ui-icon-info\" style=\"float: left; margin-right: .3em;\"></span>" + message + "</p>");
+			this._domNode.append("<p><span class=\"glyphicon glyphicon-info-sign\" style=\"float: left; margin-right: .3em;\"></span>" + message + "</p>");
 
 		},
 
 		clear: function() {
 
-			this._domNode.removeClass("ui-state-error");
-			this._domNode.removeClass("ui-state-highlight");
+			this._domNode.removeClass("alert-danger");
+			this._domNode.removeClass("alert-info");
 			this._domNode.hide();
 			this._domNode.empty();
 

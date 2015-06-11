@@ -1,15 +1,15 @@
-.ui-bordercontainer {
+.bordercontainer {
     width: 100%;
     height: 100%;
     position: relative;
     overflow: hidden;
 }
 
-.ui-bordercontainer > div {
+.bordercontainer > div {
     overflow: auto;
 }
 
-.ui-bordercontainer > .ui-bordercontainer {
+.bordercontainer > .bordercontainer {
     overflow: hidden;
 }
 
@@ -29,22 +29,22 @@
     margin-bottom: 2px;
 }
 
-.btn-icon-left {
+.btn-icon-left .btn {
     padding-left: 26px;
 }
 
-.btn-icon-left .ui-icon {
+.btn-icon-left .btn-icon {
     top: 6px;
     left: 6px;
 }
 
-.btn-text-only .ui-icon {
+.btn-text-only .btn-icon {
     display: none;
 }
 
 .btn-dropdown {
-    padding-right: 20px;
     position: relative;
+    margin: 0;
 }
 
 .btn-dropdown-container {
@@ -58,6 +58,14 @@
     position: absolute;
     right: 4px;
     top: 4px;
+}
+
+.btn-dropdown .list-group,
+.btn-dropdown .list-group-item {
+    border: none;
+    border-radius: 0;
+    margin: 0;
+    box-shadow: none;
 }
 
 .btn[disabled] {
@@ -86,8 +94,8 @@
 }
 
 .form-control {
-	display: inline-block;
-	width: auto;
+    display: inline-block;
+    width: auto;
 }
 
 .progressbar {
@@ -120,8 +128,8 @@
 }
 
 .modal-dialog {
-	width: auto;
-	position: absolute;
+    width: auto;
+    position: absolute;
 }
 
 .modal-fullscreen {
@@ -129,7 +137,7 @@
 }
 
 .modal-visible {
-	display: block;
+    display: block;
 }
 
 .confirmationDialog > .confirmation > p {
@@ -150,10 +158,10 @@
 }
 
 .search-textbox {
-	padding-top: 0;
+    padding-top: 0;
     position: relative;
     display: inline-block;
-	width: auto;
+    width: auto;
 }
 
 .search-textbox input {
@@ -166,7 +174,7 @@
     left: 6px;
 }
 
-.search-textbox .ui-clear {
+.search-textbox .clear {
     top: 6px;
     right: 6px;
     left: auto;
@@ -178,7 +186,7 @@
     position: relative;
     padding-left: 25px;
     cursor: text;
-	min-width: 200px;
+    min-width: 200px;
 }
 
 .filter-textbox input {
@@ -188,7 +196,7 @@
 }
 
 .filter-textbox .list-group {
-	position: absolute;
+    position: absolute;
 }
 
 .filter-textbox .value-container {
@@ -204,38 +212,57 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-	position: relative;
+    position: relative;
+    font-size: 100%;
 }
 
 .filter-textbox .value-container .filter-value .close {
     position: absolute;
     right: 2px;
     top: 5px;
-	font-weight: normal;
-	color: #fff;
-	font-size: 10px;
-	opacity: 1;
+    font-weight: normal;
+    color: #fff;
+    font-size: 10px;
+    opacity: 1;
 }
 
 .filter-textbox input {
     padding: 4px;
 }
 
-.filter-textbox .ui-menu {
+.filter-textbox input:focus {
+    outline: none;
+}
+
+.filter-textbox-focus {
+    border-color: #66afe9;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+}
+
+.filter-textbox .list-group {
     position: absolute;
     z-index: 999;
     max-height: 400px;
+    min-width: 215px;
+    margin-left: -26px;
     overflow: auto;
 }
 
-.filter-textbox .ui-menu li {
+.filter-textbox .list-group li {
     cursor: pointer;
 }
 
 .filter-textbox-single-value .value-container .filter-value {
     width: 100%;
     max-width: 100%;
-	display: block;
+    display: block;
+}
+
+.filter-textbox-single-value.filter-textbox-with-value .clear,
+.filter-textbox-single-value.filter-textbox-with-value input {
+    visibility: hidden;
 }
 
 .treeview {
@@ -254,7 +281,7 @@
     display: block;
 }
 
-.treeview-node.ui-no-children .icon-primary {
+.treeview-node.no-children .icon-primary {
     background: none;
 }
 
@@ -262,7 +289,7 @@
     position: absolute;
     top: 6px;
     left: 6px;
-	font-size: 10px;
+    font-size: 10px;
 }
 
 .treeview-node .icon-secondary {
@@ -287,11 +314,11 @@
 
 .treeview-node label {
     padding: 2px 0 2px 20px;
-	margin: 0;
-	cursor: pointer;
+    margin: 0;
+    cursor: pointer;
 }
 
-.treeview-node.ui-has-icon label {
+.treeview-node.has-icon label {
     padding: 2px 0 2px 40px;
     display: block;
     white-space: nowrap;
@@ -301,7 +328,7 @@
     padding-left: 40px;
 }
 
-.treeview-node-checkbox.ui-has-icon label {
+.treeview-node-checkbox.has-icon label {
     padding-left: 60px;
 }
 
@@ -342,45 +369,40 @@
     text-overflow: ellipsis;
 }
 
-.tableview .ui-menu-item {
-    float: none;
-    cursor: pointer;
-}
-
 .tableview th:last-child {
     border-right: none;
 }
 
-.btn.ui-state-custom-loading {
+.btn.btn-state-custom-loading {
     padding-right: 24px;
 }
 
-.btn.ui-state-custom-loading .ui-icon-secondary {
+.btn.btn-state-custom-loading .btn-icon-secondary {
     display: block;
     background: transparent url(../images/ajax-loader-small.gif) no-repeat 0 0 !important;
 }
 
-.btn.ui-state-custom-done {
+.btn.btn-state-custom-done {
     padding-right: 24px;
 }
 
-.btn.ui-state-custom-done .ui-icon-secondary {
+.btn.btn-state-custom-done .btn-icon-secondary {
     display: block;
     background: transparent url(../images/tick.png) no-repeat 0 0 !important;
 }
 
-.btn.ui-state-custom-loading .ui-icon-secondary {
+.btn.btn-state-custom-loading .btn-icon-secondary {
     display: block;
     background-image: url(../images/ajax-loader-small.gif);
     background-repeat: no-repeat;
 }
 
-.treeview-node .ui-icon-secondary {
+.treeview-node .btn-icon-secondary {
     top: 2px;
     left: 20px;
 }
 
-.treeview .treeview-node-checkbox .ui-icon-secondary {
+.treeview .treeview-node-checkbox .btn-icon-secondary {
     left: 40px;
 }
 
@@ -402,5 +424,5 @@
 }
 
 .list-group .list-group-item {
-	cursor: pointer;
+    cursor: pointer;
 }

@@ -68,6 +68,8 @@ define([
 
             events.on(this._domNode, "click", this._domClick, this);
             events.on(document, "click", this._documentClick, this);
+            events.on(this._textNode, "focus", this._textNodeFocus, this);
+            events.on(this._textNode, "blur", this._textNodeBlur, this);
 
             if (this.singleValue) {
                 this.addClass("filter-textbox-single-value");
@@ -79,7 +81,17 @@ define([
 
             events.off(this._domNode, "click", this._domClick, this);
             events.off(document, "click", this._documentClick, this);
+            events.off(this._textNode, "focus", this._textNodeFocus, this);
+            events.off(this._textNode, "blur", this._textNodeBlur, this);
 
+        },
+
+        _textNodeFocus: function() {
+            this._domNode.addClass("filter-textbox-focus");
+        },
+
+        _textNodeBlur: function() {
+            this._domNode.removeClass("filter-textbox-focus");
         },
 
         _documentClick: function() {
@@ -227,6 +239,8 @@ define([
 
         _addValue: function(field, value) {
 
+            var textBoxWidth = this._domNode.width();
+
             // create the filter value widget
             var node = new FilterValue({
                 name: field ? field.label : "",
@@ -253,15 +267,13 @@ define([
 
             // if it is a single value filter, size the value appropriately
             if (this.singleValue) {
-                node._domNode.outerWidth(this._domNode.width() - 8);
+                node._domNode.outerWidth(textBoxWidth);
             }
 
         },
 
         clear: function() {
             this.inherited(arguments);
-
-            console.trace("CLEAR");
 
             this._values.forEach(function(value) {
 
@@ -307,15 +319,19 @@ define([
         _resize: function() {
 
             // pad the text box over so the values don't hide it
-            this._textNode.css("margin-left", this._valueContainerNode._domNode.width());
-
-            // set the width of the text box
+            if (!this.singleValue) {
+                this._textNode.css("margin-left", this._valueContainerNode._domNode.width());
+            }
 
         },
 
         _searchKeyUp: function(e) {
 
             this.inherited(SearchTextBox, arguments);
+
+            if (this.singleValue && this._values.length > 0) {
+                return;
+            }
 
             if (e.keyCode == 38) {
                 if (this._menuIndex > 0) {

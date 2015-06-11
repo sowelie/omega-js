@@ -12,7 +12,9 @@ define([
 	"demo/widgets/Dialogs",
     "demo/widgets/FilterTextBox",
     "demo/widgets/DragAndDrop",
-	"demo/widgets/TreeView"
+	"demo/widgets/TreeView",
+    "demo/widgets/MessageContainer",
+    "demo/widgets/Buttons"
 ], function(BorderContainer, events, template) {
 
 	return BorderContainer.extend({

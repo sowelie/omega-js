@@ -258,9 +258,9 @@ define([
 		_setSelectedRow: function(row) {
 
 			if (this.allowSelect) {
-				this._bodyNode.find("tr.ui-state-focus").removeClass("ui-state-focus");
+				this._bodyNode.find("tr.bg-primary").removeClass("bg-primary");
 
-				row.addClass("ui-state-focus");
+				row.addClass("bg-primary");
 
 				this.trigger("itemselected", {dataItem: row.data("dataItem"), row: row});
 			}

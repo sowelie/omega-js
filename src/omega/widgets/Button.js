@@ -143,7 +143,7 @@ define([
 
 				className.split(" ").forEach(function(clazz) {
 
-					if (clazz.indexOf("ui-state-custom") == 0) {
+					if (clazz.indexOf("btn-state-custom") == 0) {
 
 						this._domNode.removeClass(clazz);
 
@@ -153,7 +153,7 @@ define([
 
 				if (state) {
 
-					this._domNode.addClass("ui-state-custom-" + state);
+					this._domNode.addClass("btn-state-custom-" + state);
 
 				}
 
@@ -173,33 +173,33 @@ define([
 		_onMouseDown: function() {
 
 			if (!this._domNode.attr("disabled"))
-				this._domNode.addClass("ui-state-down");
+				this._domNode.addClass("btn-state-down");
 
 		},
 
 		_onMouseUp: function() {
 
-			this._domNode.removeClass("ui-state-down");
+			this._domNode.removeClass("btn-state-down");
 
 		},
 
 		_onTouchEnd: function() {
 
-			this._domNode.removeClass("ui-state-down");
-			this._domNode.removeClass("ui-state-hover");
+			this._domNode.removeClass("btn-state-down");
+			this._domNode.removeClass("btn-hover");
 
 		},
 
 		_onHoverIn: function() {
 
 			if (!this._domNode.attr("disabled"))
-				this._domNode.addClass("ui-state-hover");
+				this._domNode.addClass("btn-hover");
 		},
 
 		_onHoverOut: function() {
 
-			this._domNode.removeClass("ui-state-hover");
-			this._domNode.removeClass("ui-state-down");
+			this._domNode.removeClass("btn-hover");
+			this._domNode.removeClass("btn-state-down");
 
 		},
 

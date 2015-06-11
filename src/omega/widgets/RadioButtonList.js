@@ -1,7 +1,7 @@
 define([
-	"../_Widget",
-	"../utils",
-	"../dom/events",
+	"omega/_Widget",
+	"omega/utils",
+	"omega/dom/events",
 	"jquery",
 	"text!./templates/RadioButtonList.html"
 ], function(_Widget, utils, events, $, template) {

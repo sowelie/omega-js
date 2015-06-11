@@ -1,5 +1,5 @@
 define([
-	"omega/widgets/Dialog",
+	"omega/widgets/BorderDialog",
 	"text!./templates/AlertDialog.html",
 	"omega/widgets/Button"
 ], function(Dialog, template) {

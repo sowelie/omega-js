@@ -50,7 +50,7 @@ define([
 				var position = panel.attr("data-layout-position");
 
 				panel.css("position", "absolute");
-				panel.addClass("ui-panel");
+				panel.addClass("bordercontainer-panel");
 
 				this.panels[position] = panel;
 
@@ -72,8 +72,8 @@ define([
 
 				topPanel.css("top", 0);
 				topPanel.css("left", 0);
-				topPanel.css("width", this._domNode.width() - parseInt(topPanel.css("padding-left")) - parseInt(topPanel.css("padding-right")));
-				topPanel.addClass("ui-top");
+				topPanel.outerWidth(this._domNode.width());
+				topPanel.addClass("bordercontainer-panel-top");
 
 				splitter = topPanel.data("splitter");
 
@@ -92,8 +92,8 @@ define([
 
 				bottomPanel.css("bottom", 0);
 				bottomPanel.css("left", 0);
-				bottomPanel.css("width", this._domNode.width() - parseInt(bottomPanel.css("padding-left")) - parseInt(bottomPanel.css("padding-right")));
-				bottomPanel.addClass("ui-bottom");
+				bottomPanel.outerWidth(this._domNode.width());
+				bottomPanel.addClass("bordercontainer-panel-bottom");
 
 			}
 
@@ -112,7 +112,7 @@ define([
 				leftPanel.css("top", topHeight + "px");
 				leftPanel.css("left", 0);
 				leftPanel.outerHeight(this._domNode.height() - topHeight - bottomHeight);
-				leftPanel.addClass("ui-left");
+				leftPanel.addClass("bordercontainer-panel-left");
 
 			}
 
@@ -126,7 +126,7 @@ define([
 				rightPanel.css("top", topHeight + "px");
 				rightPanel.css("right", 0);
 				rightPanel.outerHeight(this._domNode.height() - topHeight - bottomHeight);
-				rightPanel.addClass("ui-right");
+				rightPanel.addClass("bordercontainer-panel-right");
 
 			}
 
@@ -157,7 +157,7 @@ define([
 
 				}
 
-				centerPanel.addClass("ui-center");
+				centerPanel.addClass("bordercontainer-panel-center");
 
 			}
 
