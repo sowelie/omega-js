@@ -9,7 +9,7 @@ define([
 
 		templateString: template,
 		options: {
-			arrowPosition: "south",
+			position: "bottom",
 			text: ""
 		},
 
@@ -31,10 +31,9 @@ define([
 				this.hide();
 
 				events.on(document, "click", this._hide, this);
-				events.on(this._domNode, "mouseleave", this.hide, this);
 
-				// set the class based on the arrowPosition property
-				this._domNode.addClass("ui-tooltip-arrow-" + this.arrowPosition);
+				// set the class based on the position property
+				this._domNode.addClass(this.position);
 
 			}
 
@@ -72,7 +71,7 @@ define([
 			}
 
 			// mark the node as a tooltip anchor
-			node.addClass("ui-tooltip-anchor");
+			node.addClass("popover-anchor");
 
 			// default hover to true
 			if (typeof(hover) == "undefined") {
@@ -112,7 +111,7 @@ define([
 
 			}
 
-			node.removeClass("ui-tooltip-anchor");
+			node.removeClass("popover-anchor");
 
 			this._attachedNodes.some(function(attachedNode, index) {
 
@@ -161,7 +160,6 @@ define([
 
 			}, this);
 
-			this._containerNode.empty();
 			this.show();
 
 			// if the attachment was found, update the content
@@ -176,7 +174,7 @@ define([
 
 						targetAttachment.content(this);
 
-					} else {
+					} else if (targetAttachment.content) {
 
 						this._containerNode.html(targetAttachment.content);
 
@@ -189,12 +187,16 @@ define([
 
 			}
 
+			e.stopPropagation();
+
+			return false;
+
 		},
 
 		_hide: function(e) {
 
-			if ((e.toElement && $(e.toElement).parents(".ui-tooltip").length == 0)
-				&& $(e.target).parents(".ui-tooltip").length == 0) {
+			if ((e.toElement && $(e.toElement).parents(".popover").length == 0)
+				&& $(e.target).parents(".popover").length == 0) {
 
 				this.hide();
 
@@ -207,22 +209,22 @@ define([
 			var top = node.offset().top,
 				left = node.offset().left;
 
-			if (this.arrowPosition == "north") {
+			if (this.position == "bottom") {
 
 				top += node.outerHeight();
 				left -= (this._domNode.outerWidth() - node.outerWidth()) / 2;
 
-			} else if (this.arrowPosition == "south") {
+			} else if (this.position == "top") {
 
 				top -= this._domNode.outerHeight();
 				left -= (this._domNode.outerWidth() - node.outerWidth()) / 2;
 
-			} else if (this.arrowPosition == "east") {
+			} else if (this.position == "left") {
 
 				top -= (this._domNode.outerHeight() - node.outerHeight()) / 2;
 				left -= this._domNode.outerWidth();
 
-			} else if (this.arrowPosition = "west") {
+			} else if (this.position = "right") {
 
 				top -= (this._domNode.outerHeight() - node.outerHeight()) / 2;
 				left += node.outerWidth();

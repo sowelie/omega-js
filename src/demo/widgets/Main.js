@@ -14,7 +14,8 @@ define([
     "demo/widgets/DragAndDrop",
 	"demo/widgets/TreeView",
     "demo/widgets/MessageContainer",
-    "demo/widgets/Buttons"
+    "demo/widgets/Buttons",
+	"demo/widgets/Tooltip"
 ], function(BorderContainer, events, template) {
 
 	return BorderContainer.extend({
