@@ -201,11 +201,17 @@
 
 .filter-textbox .value-container {
     position: absolute;
-    top: 4px;
+    top: 6px;
     height: 100%;
+    display: block;
 }
 
-.filter-textbox .value-container .filter-value {
+.filter-textbox .overflow-indicator {
+    cursor: pointer;
+    padding: 4px;
+}
+
+.filter-value {
     padding: 4px 16px 4px 4px;
     margin-left: 4px;
     max-width: 200px;
@@ -214,16 +220,18 @@
     white-space: nowrap;
     position: relative;
     font-size: 100%;
+    display: inline-block;
 }
 
-.filter-textbox .value-container .filter-value .close {
+.filter-value .filter-remove {
     position: absolute;
     right: 2px;
-    top: 5px;
+    top: 8px;
     font-weight: normal;
     color: #fff;
     font-size: 10px;
     opacity: 1;
+    cursor: pointer;
 }
 
 .filter-textbox input {

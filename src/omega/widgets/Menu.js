@@ -62,10 +62,10 @@ define([
 		},
 
 		setSelectedIndex: function(index) {
-			this._domNode.find(".active").removeClass(".active");
+			this._domNode.find(".active").removeClass("active");
 
 			if (index >= 0 && index < this._childWidgets.length) {
-				this._childWidgets[index].find("a").addClass(".active");
+				this._childWidgets[index].addClass("active");
 			}
 		},
 
@@ -73,7 +73,7 @@ define([
 			// find the selected item
 			this.eachChild(function(child) {
 
-				if (child.find("a").hasClass("active")) {
+				if (child.hasClass("active")) {
 					child._click();
 				}
 

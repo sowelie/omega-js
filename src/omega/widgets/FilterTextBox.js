@@ -3,13 +3,14 @@ define([
     "omega/widgets/Menu",
     "omega/widgets/MenuItem",
     "omega/widgets/DOMWidget",
+    "omega/widgets/Tooltip",
     "omega/dom/events",
     "omega/_Widget"
-], function(SearchTextBox, Menu, MenuItem, DOMWidget, events, _Widget) {
+], function(SearchTextBox, Menu, MenuItem, DOMWidget, Tooltip, events, _Widget) {
 
     var FilterValue = _Widget.extend({
         templateString: "<div class=\"filter-value label label-primary\">" +
-            "<span class=\"name\" data-attach-point=\"nameNode\">{name} :</span> <span class=\"value\">{value}</span><span data-attach-point=\"closeNode\" class=\"glyphicon glyphicon-remove close\"></span></div>",
+            "<span class=\"name\" data-attach-point=\"nameNode\">{name} :</span> <span class=\"value\">{value}</span><span data-attach-point=\"closeNode\" class=\"glyphicon glyphicon-remove filter-remove\"></span></div>",
 
         startup: function() {
 
@@ -61,6 +62,15 @@ define([
             // create the node that will contain selected filters
             this._valueContainerNode = new DOMWidget({ nodeName: "div", className: "value-container" });
             this.addChild(this._valueContainerNode);
+
+            this._valueOverflowNode = new Tooltip();
+            this.addChild(this._valueOverflowNode);
+            this._valueOverflowNode.addClass("value-overflow");
+
+            this._overflowIndicatorNode = new DOMWidget({ nodeName: "span", className: "filter-value overflow-indicator label label-primary", innerHTML: "..." });
+            this._valueContainerNode.addChild(this._overflowIndicatorNode);
+            this._overflowIndicatorNode.hide();
+            this._valueOverflowNode.attachTo(this._overflowIndicatorNode, false);
 
             this._domNode.addClass("filter-textbox");
 
@@ -237,6 +247,17 @@ define([
 
         },
 
+        _displayOverflow: function() {
+            this._overflowIndicatorNode.show();
+            // make sure the value indicator node is always last
+            this._valueContainerNode.addChild(this._overflowIndicatorNode, true);
+        },
+
+        _hideOverflow: function() {
+            this._overflowIndicatorNode.hide();
+            this._resize();
+        },
+
         _addValue: function(field, value) {
 
             var textBoxWidth = this._domNode.width();
@@ -251,6 +272,15 @@ define([
 
             // add it to the value container
             this._valueContainerNode.addChild(node);
+
+            if (this._valueContainerNode._domNode.width() + this._textNode.width() > parseInt(this.css("max-width"))) {
+                node.overflow = true;
+                this._valueContainerNode.removeChild(node);
+                this._valueOverflowNode.addChild(node, true);
+                this._displayOverflow();
+            } else {
+                this._hideOverflow();
+            }
 
             // keep track of all of the values
             this._values.push({
@@ -276,9 +306,7 @@ define([
             this.inherited(arguments);
 
             this._values.forEach(function(value) {
-
                 value.domNode.destroy();
-
             });
 
             this._values = [];
@@ -311,6 +339,10 @@ define([
                 return false;
 
             }, this);
+
+            if (this._valueContainerNode._domNode.width() + this._textNode.width() < parseInt(this.css("max-width"))) {
+                this._hideOverflow();
+            }
 
             this.trigger("filterchange", this._values);
 
@@ -345,11 +377,11 @@ define([
                 if (this._menuNode.isVisible()) {
                     this._menuNode.select();
                 } else {
-                    var value = this.getValue();
+                    var value = this.getDisplayedValue();
 
                     this._addValue(this._currentField, { label: value, value: value });
                     this._currentField = null;
-                    this.clear();
+                    this.setValue("");
                 }
             } else {
                 if (this.getRawValue().indexOf(":") == -1) {

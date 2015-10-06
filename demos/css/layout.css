@@ -9,3 +9,7 @@ html, body, #main {
 .ui-toolbar {
     margin: 0;
 }
+
+.filterTextBox .filter {
+    max-width: 400px;
+}

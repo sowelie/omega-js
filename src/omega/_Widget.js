@@ -257,20 +257,24 @@ define([
 
 		},
 
-		addChild: function(childWidget) {
+		addChild: function(childWidget, addToDOM) {
 
 			// check to see if the widget needs to be added to the DOM
 			if (!childWidget._domNode) {
+                if (typeof(addToDOM) == "undefined") {
+                    addToDOM = true;
+                }
 
 				childWidget.startup();
-
-				// check for a container node
-				if (this._containerNode)
-					this._containerNode.append(childWidget._domNode);
-				else
-					this._domNode.append(childWidget._domNode);
-
 			}
+
+            if (addToDOM) {
+                // check for a container node
+                if (this._containerNode)
+                    this._containerNode.append(childWidget._domNode);
+                else
+                    this._domNode.append(childWidget._domNode);
+            }
 
 			this._childWidgets.push(childWidget);
 
