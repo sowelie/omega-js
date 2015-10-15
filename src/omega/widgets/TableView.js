@@ -239,6 +239,14 @@ define([
 
         },
 
+        getSelectedIndex: function() {
+            return this._bodyNode.index(this._bodyNode.find("tr.bg-primary"));
+        },
+
+        getSelectedItem: function() {
+            return this._bodyNode.find("tr.bg-primary").data("dataItem");
+        },
+
 		setSelectedIndex: function(index) {
 
 			if (index >= 0 && index < this._childWidgets.length - 1) {

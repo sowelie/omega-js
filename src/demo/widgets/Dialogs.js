@@ -72,7 +72,8 @@ define([
 			new Dialog({
 				content: "<div class=\"modal-body\">This is a regular dialog that can be extended to create custom dialogs.</div>",
 				title: "Regular Dialog",
-				width: 400,
+				width: 800,
+                height: 600,
 				destroyOnHide: true
 			}).show();
 

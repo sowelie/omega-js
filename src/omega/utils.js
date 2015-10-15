@@ -4,14 +4,14 @@ define([], function() {
 	  return Math.floor((1 + Math.random()) * 0x10000)
 	             .toString(16)
 	             .substring(1);
-	};
+	}
 
 	function guid() {
 	  return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
 	         s4() + '-' + s4() + s4() + s4();
 	}
 
-	return {
+	var utils = {
 		extend: function (/*Object*/ dest) /*-> Object*/ {	// merge src properties into dest
 			var sources = Array.prototype.slice.call(arguments, 1);
 			for (var j = 0, len = sources.length, src; j < len; j++) {
@@ -78,8 +78,33 @@ define([], function() {
 
 			return guid();
 
-		}
+		},
+
+        equals: function(a, b) {
+            if (typeof(a) == "object" && typeof(b) == "object") {
+                for (var i in a) {
+                    if (a.hasOwnProperty(i)) {
+                        if (!b.hasOwnProperty(i)) return false;
+                        if (a[i] != b[i]) return false;
+                        if (!utils.equals(a[i], b[i])) return false;
+                    }
+                }
+                for (var i in b) {
+                    if (b.hasOwnProperty(i)) {
+                        if (!a.hasOwnProperty(i)) return false;
+                        if (a[i] != b[i]) return false;
+                        if (!utils.equals(a[i], b[i])) return false;
+                    }
+                }
+            } else if (a != b) {
+                return false;
+            }
+
+            return true;
+        }
 
 	};
+
+    return utils;
 
 });

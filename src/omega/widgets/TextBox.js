@@ -1,9 +1,10 @@
 define([
 	"omega/_Widget",
+    "omega/widgets/Tooltip",
 	"omega/dom/events",
 	"text!./templates/TextBox.html",
 	"text!./templates/TextBox_multiLine.html"
-], function(_Widget, events, template, templateMultiLine) {
+], function(_Widget, Tooltip, events, template, templateMultiLine) {
 
 	return _Widget.extend({
 
@@ -81,10 +82,25 @@ define([
 		},
 
 		clear: function() {
-
 			this.setValue("");
+		},
 
-		}
+        setState: function(state, message) {
+            if (this._tooltip) {
+                this._tooltip.destroy();
+            }
+
+            this.removeClass("has-error has-warning has-success has-feedback");
+            this.addClass("has-" + state);
+
+            // add a tooltip if a message was specified
+            if (message) {
+                this.addClass("has-feedback");
+                this._tooltip = new Tooltip({ text: message });
+                this.addChild(this._tooltip);
+                this._tooltip.attachTo(this._textNode, true);
+            }
+        }
 
 	});
 

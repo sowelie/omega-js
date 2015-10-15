@@ -158,25 +158,26 @@
 }
 
 .search-textbox {
-    padding-top: 0;
+    padding-top: 4px;
     position: relative;
     display: inline-block;
     width: auto;
+    vertical-align: middle;
 }
 
 .search-textbox input {
-    padding: 2px 25px;
+    padding: 1px 10px;
     font-size: 16px;
 }
 
-.search-textbox .tango {
-    top: 6px;
-    left: 6px;
+.filter-textbox .glyphicon {
+    position: absolute;
+    right: 6px;
+    top: 8px;
 }
 
 .search-textbox .clear {
-    top: 6px;
-    right: 6px;
+    right: 24px;
     left: auto;
     cursor: pointer;
     display: none;
@@ -184,11 +185,11 @@
 
 .filter-textbox {
     position: relative;
-    padding-left: 25px;
     cursor: text;
     min-width: 200px;
 }
 
+.search-textbox input,
 .filter-textbox input {
     border: none;
     background: none;
@@ -226,7 +227,7 @@
 .filter-value .filter-remove {
     position: absolute;
     right: 2px;
-    top: 8px;
+    top: 6px;
     font-weight: normal;
     color: #fff;
     font-size: 10px;
@@ -235,7 +236,7 @@
 }
 
 .filter-textbox input {
-    padding: 4px;
+    padding: 1px;
 }
 
 .filter-textbox input:focus {
@@ -254,7 +255,6 @@
     z-index: 999;
     max-height: 400px;
     min-width: 215px;
-    margin-left: -26px;
     overflow: auto;
 }
 
@@ -356,29 +356,8 @@
     width: auto;
 }
 
-.tableview table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.tableview th {
-    text-align: left;
-    padding: 8px;
-    border-bottom: 1px solid #999;
-    border-right: 1px solid #fff;
+.tableview tbody td {
     cursor: pointer;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.tableview td {
-    padding: 2px 8px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.tableview th:last-child {
-    border-right: none;
 }
 
 .btn.btn-state-custom-loading {

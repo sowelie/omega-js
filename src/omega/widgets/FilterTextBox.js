@@ -5,12 +5,13 @@ define([
     "omega/widgets/DOMWidget",
     "omega/widgets/Tooltip",
     "omega/dom/events",
+    "omega/utils",
     "omega/_Widget"
-], function(SearchTextBox, Menu, MenuItem, DOMWidget, Tooltip, events, _Widget) {
+], function(SearchTextBox, Menu, MenuItem, DOMWidget, Tooltip, events, utils, _Widget) {
 
     var FilterValue = _Widget.extend({
         templateString: "<div class=\"filter-value label label-primary\">" +
-            "<span class=\"name\" data-attach-point=\"nameNode\">{name} :</span> <span class=\"value\">{value}</span><span data-attach-point=\"closeNode\" class=\"glyphicon glyphicon-remove filter-remove\"></span></div>",
+        "<span class=\"name\" data-attach-point=\"nameNode\">{name} :</span> <span class=\"value\">{value}</span><span data-attach-point=\"closeNode\" class=\"glyphicon glyphicon-remove filter-remove\"></span></div>",
 
         startup: function() {
 
@@ -256,9 +257,21 @@ define([
         _hideOverflow: function() {
             this._overflowIndicatorNode.hide();
             this._resize();
+
+            // move any of the previous values that were in the overflow container to the regular container
+            this._values.forEach(function(value) {
+                if (value.domNode.overflow) {
+                    this._valueContainerNode.addChild(value.domNode, true);
+                    value.domNode.overvlow = false;
+                }
+            }, this);
         },
 
         _addValue: function(field, value) {
+
+            if (this._valueExists(field, value)) {
+                return;
+            }
 
             var textBoxWidth = this._domNode.width();
 
@@ -273,21 +286,22 @@ define([
             // add it to the value container
             this._valueContainerNode.addChild(node);
 
-            if (this._valueContainerNode._domNode.width() + this._textNode.width() > parseInt(this.css("max-width"))) {
-                node.overflow = true;
-                this._valueContainerNode.removeChild(node);
-                this._valueOverflowNode.addChild(node, true);
-                this._displayOverflow();
-            } else {
-                this._hideOverflow();
-            }
-
             // keep track of all of the values
             this._values.push({
                 field: field,
                 value: value,
                 domNode: node
             });
+
+            if (this._getValueContainerWidth() > parseInt(this._domNode.width())) {
+                node.overflow = true;
+                this._valueContainerNode.removeChild(node);
+                this._valueOverflowNode.addChild(node, true);
+                this._displayOverflow();
+                this._resize();
+            } else {
+                this._hideOverflow();
+            }
 
             this._resize();
 
@@ -302,6 +316,34 @@ define([
 
         },
 
+        _valueExists: function(field, value) {
+            var result = false;
+
+            this._values.some(function(entry) {
+                if (utils.equals(entry.field, field) && utils.equals(entry.value, value)) {
+                    result = true;
+                    return true;
+                }
+            });
+
+            return result;
+        },
+
+        _getValueContainerWidth: function() {
+            var result = this._textNode.width();
+
+            // make sure the tooltip is displaed for the width calculation
+            this._valueOverflowNode.show();
+
+            this._values.forEach(function(value) {
+                result += value.domNode._domNode.outerWidth();
+            });
+
+            this._valueOverflowNode.hide();
+
+            return result;
+        },
+
         clear: function() {
             this.inherited(arguments);
 
@@ -312,6 +354,7 @@ define([
             this._values = [];
             this._resize();
             this.removeClass("filter-textbox-with-value");
+            this.trigger("filterchange", this._values);
         },
 
         _removeValueClick: function(e) {
@@ -340,8 +383,9 @@ define([
 
             }, this);
 
-            if (this._valueContainerNode._domNode.width() + this._textNode.width() < parseInt(this.css("max-width"))) {
+            if (this._getValueContainerWidth() < parseInt(this.css("max-width"))) {
                 this._hideOverflow();
+                this._resize();
             }
 
             this.trigger("filterchange", this._values);

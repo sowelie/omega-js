@@ -11,67 +11,70 @@ define([
 
 		_defaultDataType: "jsonp",
 		_defaultMethod: "POST",
-		post: function(action, data, callback, scope) {
 
-			if (typeof(data) == "function") {
-				scope = callback;
-				callback = data;
-				data = {};
-			}
+        post: function(action, data, callback, scope) {
+            return this.execute(action, "POST", data, callback, scope);
+        },
 
-			// serialize any property that is an object
-			for (var name in data) {
+        execute: function(action, method, data, callback, scope) {
+            if (typeof(data) == "function") {
+                scope = callback;
+                callback = data;
+                data = {};
+            }
 
-				var obj = data[name];
+            // serialize any property that is an object
+            for (var name in data) {
 
-				if (typeof(obj) == "object")
-					data[name] = JSON.stringify(obj);
+                var obj = data[name];
 
-			}
+                if (typeof(obj) == "object")
+                    data[name] = JSON.stringify(obj);
 
-			data.format = this._defaultDataType;
+            }
 
-			var result = promise();
+            data.format = this._defaultDataType;
 
-			this.processData(data);
+            var result = promise();
 
-			$.ajax({
-				url: this.getURL(action),
-				data: data,
-				dataType: this._defaultDataType,
-				type: this._defaultMethod,
-				success: function(response, status, jqxhr) {
+            this.processData(data);
 
-					if (response && response.error) {
-						messageBus.publish("main/triggerError", {
-							message: response.error
-						});
-					}
+            $.ajax({
+                url: this.getURL(action),
+                data: data,
+                dataType: this._defaultDataType,
+                type: method ? method : this._defaultMethod,
+                success: function(response, status, jqxhr) {
 
-					// call the callback
-					(scope ? utils.bind(callback, scope) : callback)(response, false, status, jqxhr);
+                    if (response && response.error) {
+                        messageBus.publish("main/triggerError", {
+                            message: response.error
+                        });
+                    }
 
-					// resolve the promise
-					result.resolve(response, false, status, jqxhr);
+                    // call the callback
+                    (scope ? utils.bind(callback, scope) : callback)(response, false, status, jqxhr);
 
-				},
+                    // resolve the promise
+                    result.resolve(response, false, status, jqxhr);
 
-				error: function(response, status, jqxhr) {
+                },
 
-					console.log(response);
+                error: function(response, status, jqxhr) {
 
-					result.resolve(response, true, status, jqxhr);
+                    console.log(response);
 
-					// call the callback
-					(scope ? utils.bind(callback, scope) : callback)(response, false, status, jqxhr);
+                    result.resolve(response, true, status, jqxhr);
 
-				}
+                    // call the callback
+                    (scope ? utils.bind(callback, scope) : callback)(response, false, status, jqxhr);
 
-			});
+                }
 
-			return result;
+            });
 
-		},
+            return result;
+        },
 
 		postJSON: function(options) {
 
