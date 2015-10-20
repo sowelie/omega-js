@@ -83,6 +83,23 @@ define([
 
 		},
 
+        removeColumn: function(label) {
+            var column = null;
+
+            this._columnTemplates.some(function(current) {
+                if (current.label == label) {
+                    column = current;
+                    return true;
+                }
+            }, this);
+
+            if (column != null) {
+                var index = this._columnTemplates.indexOf(column);
+
+                this._columnTemplates.splice(index, 1);
+            }
+        },
+
 		clearColumns: function() {
 
 			this._columnTemplates = [];

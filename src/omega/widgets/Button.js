@@ -204,18 +204,12 @@ define([
 		},
 
 		_onClick: function(e) {
-
-			e.preventDefault();
-
 			if (this._domNode.attr("disabled"))
 				return false;
 
 			e.targetWidget = this;
 
 			this.trigger("click", e);
-
-			return false;
-
 		}
 
 	}, "widgets.Button");

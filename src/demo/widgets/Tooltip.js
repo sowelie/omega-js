@@ -25,23 +25,25 @@ define([
             var rightTooltip = new Tooltip({ text: "right", position: "right", parentNode: document.body });
             rightTooltip.attachTo(this._rightButtonNode, false);
 
+            var hoverTooltip = new Tooltip({ text: "hover", position: "bottom", parentNode: document.body });
+            hoverTooltip.attachTo(this._hoverButtonNode, true);
+
             this._tooltips = [
                 topTooltip,
                 bottomTooltip,
                 leftTooltip,
-                rightTooltip
+                rightTooltip,
+                hoverTooltip
             ];
 
         },
 
         destroy: function() {
-
             this.inherited(_Widget, arguments);
 
             this._tooltips.forEach(function(tooltip) {
                 tooltip.destroy();
             });
-
         }
 
     });

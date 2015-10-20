@@ -58,16 +58,11 @@ define([
 		},
 
 		attachTo: function(node, hover, content) {
-
 			// make sure the node is a jquery object
 			if (node.__typeName) {
-
 				node = node._domNode;
-
 			} else if (!node.jQuery) {
-
 				node = $(node);
-
 			}
 
 			// mark the node as a tooltip anchor
@@ -75,9 +70,7 @@ define([
 
 			// default hover to true
 			if (typeof(hover) == "undefined") {
-
 				hover = true;
-
 			}
 
 			this.startup();
@@ -89,9 +82,7 @@ define([
 			events.on(node, hover ? "mouseenter" : "click", this._show, this);
 
 			if (hover) {
-
 				events.on(node, "mouseleave", this._hide, this);
-
 			}
 
 			this._attachedNodes.push({ node: node, hover: hover, content: content });
@@ -99,136 +90,115 @@ define([
 		},
 
 		detachFrom: function(node) {
-
 			// make sure the node is a jquery object
 			if (node.__typeName) {
-
 				node = node._domNode;
-
 			} else if (!node.jQuery) {
-
 				node = $(node);
-
 			}
 
 			node.removeClass("popover-anchor");
 
 			this._attachedNodes.some(function(attachedNode, index) {
-
 				if (attachedNode.node[0] == node) {
-
 					this._detach(attachedNode);
 					this._attachedNodes.splice(index, 1);
 
 					return true;
-
 				}
 
 				return false;
-
 			}, this);
 
 		},
 
 		_detach: function(attachedNode) {
-
 			events.off(attachedNode.node, attachedNode.hover ? "mouseenter" : "click", this._show, this);
 
 			if (attachedNode.hover) {
-
 				events.off(attachedNode.node, "mouseleave", this._hide, this);
-
 			}
-
 		},
 
 		_show: function(e) {
-
 			var targetAttachment = null;
 
 			// try and find the attached node
 			this._attachedNodes.some(function(attachedNode) {
-
 				if (attachedNode.node[0] == e.currentTarget) {
-
 					targetAttachment = attachedNode;
 					return true;
-
 				}
 
 				return false;
-
 			}, this);
 
 			this.show();
 
 			// if the attachment was found, update the content
 			if (targetAttachment != null) {
-
 				var node = targetAttachment.node;
 
 				if (targetAttachment.content) {
-
 					// if the content is a function, call it
 					if (typeof(targetAttachment.content) == "function") {
-
 						targetAttachment.content(this);
-
 					} else if (targetAttachment.content) {
-
 						this._containerNode.html(targetAttachment.content);
-
 					}
-
 				}
 
 				// position the tooltip
 				this._position(node);
-
 			}
-
-			e.stopPropagation();
-
-			return false;
-
 		},
 
 		_hide: function(e) {
+            // check to see if the target node is being clicked
+            if (e.type != "mouseleave" && this._attachedNodes.some(function(attachedNode) {
+                    var result = false;
 
-			if ((e.toElement && $(e.toElement).parents(".popover").length == 0)
-				&& $(e.target).parents(".popover").length == 0) {
+                    // check each parent
+                    $(e.target).parents().each(function() {
+                        if (attachedNode.node[0] == this) {
+                            result = true;
+                        }
+                    });
 
+                    // check the current target
+                    if (attachedNode.node[0] == e.target) {
+                        result = true;
+                    }
+
+                    return result;
+            }, this)) {
+                return;
+            }
+
+            // check to see if the tooltip itself is being clicked
+			if (e.type == "mouseleave" || (e.toElement && $(e.toElement).parents(".popover").length == 0
+				&& $(e.target).parents(".popover").length == 0)) {
 				this.hide();
-
 			}
-
 		},
 
 		_position: function(node) {
-
 			var top = node.offset().top,
 				left = node.offset().left;
 
 			if (this.position == "bottom") {
-
 				top += node.outerHeight();
 				left -= (this._domNode.outerWidth() - node.outerWidth()) / 2;
-
 			} else if (this.position == "top") {
-
 				top -= this._domNode.outerHeight();
 				left -= (this._domNode.outerWidth() - node.outerWidth()) / 2;
-
 			} else if (this.position == "left") {
-
 				top -= (this._domNode.outerHeight() - node.outerHeight()) / 2;
 				left -= this._domNode.outerWidth();
-
 			} else if (this.position = "right") {
 
 				top -= (this._domNode.outerHeight() - node.outerHeight()) / 2;
 				left += node.outerWidth();
-
 			}
 
 			this._domNode.css("top", top);

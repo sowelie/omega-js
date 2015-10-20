@@ -64,10 +64,10 @@ define([
 
                     console.log(response);
 
-                    result.resolve(response, true, status, jqxhr);
-
                     // call the callback
                     (scope ? utils.bind(callback, scope) : callback)(response, false, status, jqxhr);
+
+                    result.resolve(response, true, status, jqxhr);
 
                 }
 
@@ -95,7 +95,7 @@ define([
 				type: "POST",
 				dataType: dataType || "json",
 				contentType: "application/json",
-				success: function(response) {
+				success: function(response, status, jqxhr) {
 
 					if (response && response.error) {
 						messageBus.publish("main/triggerError", {
@@ -104,17 +104,18 @@ define([
 					}
 
 					// call the callback
-					(scope ? utils.bind(callback, scope) : callback)(response);
+					(scope ? utils.bind(callback, scope) : callback)(response, status, jqxhr);
 
 					// resolve the promise
 					result.resolve(response);
 
 				},
 
-				error: function(response) {
+				error: function(response, status, jqxhr) {
 
 					result.resolve(response);
 					console.log(arguments);
+                    (scope ? utils.bind(callback, scope) : callback)(response.responseJSON ? response.responseJSON : response.responseText, status, jqxhr);
 
 				}
 
