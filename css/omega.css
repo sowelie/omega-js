@@ -286,11 +286,11 @@
 .search-textbox .glyphicon {
     position: absolute;
     top: 9px;
-    left: 9px;
+    right: 9px;
 }
 
 .search-textbox .clear {
-    right: 9px;
+    right: 28px;
     left: auto;
     cursor: pointer;
     display: none;
