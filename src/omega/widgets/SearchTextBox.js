@@ -16,7 +16,7 @@ define([
 
 		startup: function() {
 
-			this._domNode.addClass("search-textbox form-control");
+			this._domNode.addClass("filter-textbox search-textbox form-control");
 
 			this._clearNode = $("<span />").addClass("clear glyphicon glyphicon-remove").appendTo(this._domNode);
 			this._textNode.removeClass("form-control");

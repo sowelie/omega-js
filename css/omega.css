@@ -34,8 +34,8 @@
 }
 
 .btn-icon-left .btn-icon {
-    top: 6px;
     left: 6px;
+    width: 16px;
 }
 
 .btn-text-only .btn-icon {
@@ -158,26 +158,25 @@
 }
 
 .search-textbox {
-    padding-top: 4px;
+    padding-top: 0;
     position: relative;
     display: inline-block;
     width: auto;
-    vertical-align: middle;
 }
 
 .search-textbox input {
-    padding: 1px 10px;
+    padding: 2px 25px;
     font-size: 16px;
 }
 
-.filter-textbox .glyphicon {
-    position: absolute;
-    right: 6px;
-    top: 8px;
+.search-textbox .tango {
+    top: 6px;
+    left: 6px;
 }
 
 .search-textbox .clear {
-    right: 24px;
+    top: 6px;
+    right: 6px;
     left: auto;
     cursor: pointer;
     display: none;
@@ -236,7 +235,7 @@
 }
 
 .filter-textbox input {
-    padding: 1px;
+    padding: 4px;
 }
 
 .filter-textbox input:focus {
@@ -271,6 +270,30 @@
 .filter-textbox-single-value.filter-textbox-with-value .clear,
 .filter-textbox-single-value.filter-textbox-with-value input {
     visibility: hidden;
+}
+
+.search-textbox {
+    padding-top: 0;
+    position: relative;
+    display: inline-block;
+    width: auto;
+}
+
+.search-textbox input {
+    font-size: 16px;
+}
+
+.search-textbox .glyphicon {
+    position: absolute;
+    top: 9px;
+    left: 9px;
+}
+
+.search-textbox .clear {
+    right: 9px;
+    left: auto;
+    cursor: pointer;
+    display: none;
 }
 
 .treeview {
