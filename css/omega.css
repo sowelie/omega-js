@@ -436,3 +436,20 @@
 .list-group .list-group-item {
     cursor: pointer;
 }
+
+.select button {
+    width: 100%;
+    text-align: left;
+    position: relative;
+    padding-right: 20px;
+}
+
+.select button .caret {
+    position: absolute;
+    right: 8px;
+    top: 14px;
+}
+
+.select ul {
+    width: 100%;
+}

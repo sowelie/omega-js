@@ -11,24 +11,19 @@ define([
 		templateString: template,
 
 		initialize: function() {
-
 			this.inherited(Button, arguments);
-
 		},
 
 		startup: function() {
-
 			this.inherited(Button, arguments);
 
 			var labelNode = this._containerNode.find("> span");
 
 			// set the label text
 			if (labelNode.length > 0) {
-
 				this._labelNode.html(labelNode.html());
 
 				labelNode.detach();
-
 			}
 
 			// add a class if there is no text
@@ -63,11 +58,11 @@ define([
 		},
 
 		setLabel: function(label) {
+            console.log(this);
 
 			this._labelNode.html(label);
 
 			this._domNode.removeClass("btn-icon-only");
-
 		},
 
 		_documentClick: function(e) {
@@ -98,7 +93,6 @@ define([
 		},
 
 		_onClick: function(e) {
-
 			if (!this.isEnabled()) {
 				e.preventDefault();
 				return false;
@@ -112,19 +106,14 @@ define([
 				this.showMenu();
 
 			this.trigger("click", e);
-
 		},
 
 		hideMenu: function() {
-
 			this._containerNode.hide();
-
 		},
 
 		showMenu: function() {
-
 			this._containerNode.show();
-
 		}
 
 	});

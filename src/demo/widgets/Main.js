@@ -16,7 +16,8 @@ define([
     "demo/widgets/MessageContainer",
     "demo/widgets/Buttons",
 	"demo/widgets/Tooltip",
-    "demo/widgets/Forms"
+    "demo/widgets/Forms",
+    "demo/widgets/Select"
 ], function(BorderContainer, events, template) {
 
 	return BorderContainer.extend({
