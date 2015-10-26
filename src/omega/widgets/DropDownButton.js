@@ -58,8 +58,6 @@ define([
 		},
 
 		setLabel: function(label) {
-            console.log(this);
-
 			this._labelNode.html(label);
 
 			this._domNode.removeClass("btn-icon-only");
