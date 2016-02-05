@@ -31,11 +31,12 @@ define([
 			tabs.each(utils.bind(function(index, element) {
 
 				var $element = $(element),
-					title = $element.attr("data-title");
+					title = $element.attr("data-title"),
+                    titleElement = $element.find("> span.title");
 
-				if (title) {
+				if (title || titleElement.length > 0) {
 
-					var tab = new Tab({ title: title });
+					var tab = new Tab({ title: title || titleElement });
 
 					this.addChild(tab);
 

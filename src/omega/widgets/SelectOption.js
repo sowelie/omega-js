@@ -9,6 +9,8 @@ define([
         startup: function() {
             this.inherited(arguments);
 
+            this.setLabel(this.label);
+
             events.on(this._containerNode, "click", this._click, this);
         },
 
@@ -28,6 +30,7 @@ define([
 
         setLabel: function(label) {
             this._containerNode.html(label);
+            this._containerNode.attr("title", label);
         },
 
         setValue: function(value) {

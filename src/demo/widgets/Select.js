@@ -14,6 +14,7 @@ define([
 
         _selectChange: function(e) {
             this._outputNode.html("Label: " + e.option.getLabel() + " value: " + e.option.getValue());
+            this._outputNode.append("<br />" + this._selectNode.getSelectedIndex());
         }
     })
 });

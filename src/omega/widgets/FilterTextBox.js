@@ -168,10 +168,9 @@ define([
 
         _fieldClick: function(e) {
 
-            this.setValue(e.menuItem.dataItem.label + ": ");
+            this.setRawValue(e.menuItem.dataItem.label + ": ");
             this._currentField = e.menuItem.dataItem;
             this._menuNode.hide();
-            this.focus();
 
         },
 
@@ -220,6 +219,26 @@ define([
             }
         },
 
+        setValue: function(value) {
+            var values = [];
+
+            if (this.singleValue) {
+                values = [value];
+            } else {
+                values = value;
+            }
+
+            values.forEach(function(filter) {
+                this._addValue(filter.field, filter.value, true);
+            }, this);
+
+            this.trigger("filterchange", this._values);
+        },
+
+        setRawValue: function(value) {
+            SearchTextBox.prototype.setValue.apply(this, arguments);
+        },
+
         getDisplayedValue: function() {
 
             var value = this.getRawValue(),
@@ -244,7 +263,7 @@ define([
             this._addValue(this._currentField, e.menuItem.dataItem);
             this._currentField = null;
             this._menuNode.hide();
-            this.setValue("");
+            this.setRawValue("");
 
         },
 
@@ -267,7 +286,7 @@ define([
             }, this);
         },
 
-        _addValue: function(field, value) {
+        _addValue: function(field, value, suppressEvent) {
 
             if (this._valueExists(field, value)) {
                 return;
@@ -305,7 +324,9 @@ define([
 
             this._resize();
 
-            this.trigger("filterchange", this._values);
+            if (!suppressEvent) {
+                this.trigger("filterchange", this._values);
+            }
 
             this.addClass("filter-textbox-with-value");
 
@@ -313,7 +334,6 @@ define([
             if (this.singleValue) {
                 node._domNode.outerWidth(textBoxWidth);
             }
-
         },
 
         _valueExists: function(field, value) {
@@ -425,7 +445,7 @@ define([
 
                     this._addValue(this._currentField, { label: value, value: value });
                     this._currentField = null;
-                    this.setValue("");
+                    this.setRawValue("");
                 }
             } else {
                 if (this.getRawValue().indexOf(":") == -1) {

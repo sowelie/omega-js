@@ -13,13 +13,14 @@ define([
             var select = this;
 
             // check to see if any existing options need to be created
-            this._containerNode.find("li").each(function() {
-                var currentNode = $(this);
+            this._containerNode.find("li").each(function(index) {
+                var currentNode = $(this),
+                    option = select.addOption(currentNode.html(), currentNode.attr("data-value"));
 
-                // add the option
-                select.addOption(currentNode.html(), currentNode.attr("data-value"));
+                if (index == 0) {
+                    select._setSelectedNode(option);
+                }
 
-                // remove the old node
                 currentNode.detach();
             });
 		},
@@ -29,6 +30,8 @@ define([
             this.addChild(option);
 
             option.on("click", this._optionClick, this);
+
+            return option;
 		},
 
         clear: function() {
@@ -66,6 +69,25 @@ define([
                 this._setSelectedNode(result);
             }
 		},
+
+        setSelectedIndex: function(index) {
+            if (index >= 0 && this._childWidgets.length > index) {
+                this._setSelectedNode(this._childWidgets[index]);
+            }
+        },
+
+        getSelectedIndex: function() {
+            var result = -1;
+
+            this.eachChild(function(child, index) {
+                if (child.hasClass("active")) {
+                    result = index;
+                    return true;
+                }
+            }, this);
+
+            return result;
+        },
 
         _optionClick: function(e) {
             this._setSelectedNode(e.widget);

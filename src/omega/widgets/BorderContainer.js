@@ -123,6 +123,11 @@ define([
 
 				rightWidth = rightPanel.outerWidth();
 
+                splitter = rightPanel.data("splitter");
+
+                if (splitter)
+                    rightWidth += splitter._domNode.outerWidth();
+
 				rightPanel.css("top", topHeight + "px");
 				rightPanel.css("right", 0);
 				rightPanel.outerHeight(this._domNode.height() - topHeight - bottomHeight);

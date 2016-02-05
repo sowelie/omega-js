@@ -52,6 +52,13 @@
     left: 0;
     display: none;
     z-index: 997;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.btn-dropdown-container > li > a {
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .btn-dropdown .btn-icon-secondary {
@@ -169,17 +176,18 @@
     font-size: 16px;
 }
 
-.search-textbox .tango {
-    top: 6px;
-    left: 6px;
-}
-
 .search-textbox .clear {
     top: 6px;
     right: 6px;
     left: auto;
     cursor: pointer;
     display: none;
+}
+
+.search-textbox .glyphicon {
+    position: absolute;
+    top: 9px;
+    right: 9px;
 }
 
 .filter-textbox {
@@ -283,12 +291,6 @@
     font-size: 16px;
 }
 
-.search-textbox .glyphicon {
-    position: absolute;
-    top: 9px;
-    right: 9px;
-}
-
 .search-textbox .clear {
     right: 28px;
     left: auto;
@@ -379,6 +381,25 @@
     width: auto;
 }
 
+.tableview thead th {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.tableview.enable-sort thead th {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.tableview thead th.no-sort {
+    text-decoration: none;
+    cursor: default
+}
+
 .tableview tbody td {
     cursor: pointer;
 }
@@ -435,6 +456,12 @@
 
 .list-group .list-group-item {
     cursor: pointer;
+}
+
+.select .btn-text {
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    display: block;
 }
 
 .select button {

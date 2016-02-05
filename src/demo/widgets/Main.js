@@ -17,7 +17,8 @@ define([
     "demo/widgets/Buttons",
 	"demo/widgets/Tooltip",
     "demo/widgets/Forms",
-    "demo/widgets/Select"
+    "demo/widgets/Select",
+    "demo/widgets/TableView"
 ], function(BorderContainer, events, template) {
 
 	return BorderContainer.extend({

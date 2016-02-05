@@ -249,26 +249,28 @@ define([
             var targetElement = e.target,
                 sourceElement = e.element,
                 sourceWidget = sourceElement.data("widget"),
-                newIndex = targetElement.index(),
+                newIndex = targetElement ? targetElement.index() : -1,
                 oldIndex = sourceElement.index();
 
-            // if the element is going below the target, add one to the new index
-            if (targetElement.hasClass("dragtarget-below")) {
-                newIndex++;
-                targetElement.after(sourceElement);
-            } else {
-                targetElement.before(sourceElement);
+            if (newIndex >= 0) {
+                // if the element is going below the target, add one to the new index
+                if (targetElement.hasClass("dragtarget-below")) {
+                    newIndex++;
+                    targetElement.after(sourceElement);
+                } else {
+                    targetElement.before(sourceElement);
+                }
+
+                this.log("MOVE", sourceElement, targetElement, oldIndex, newIndex);
+
+                e.target.removeClass("dragtarget-above dragtarget-below");
+
+                this.trigger("moveitem", {
+                    item: sourceWidget,
+                    fromIndex: oldIndex,
+                    toIndex: newIndex
+                });
             }
-
-            this.log("MOVE", sourceElement, targetElement, oldIndex, newIndex);
-
-            e.target.removeClass("dragtarget-above dragtarget-below");
-
-            this.trigger("moveitem", {
-                item: sourceWidget,
-                fromIndex: oldIndex,
-                toIndex: newIndex
-            });
         }
 
 	});

@@ -14,20 +14,25 @@ define([
 
 		options: {
 			displayHeaders: true,
-			allowSelect: true
+			allowSelect: true,
+            enableSort: false
 		},
 
 		initialize: function() {
-
 			this.inherited(_Widget, arguments);
 
 			this._columnTemplates = [];
-
+            this._sortColumn = "";
+            this._sortDirection = "asc";
 		},
 
 		startup: function() {
 
 			this.inherited(_Widget, arguments);
+
+            if (this.enableSort) {
+                this.addClass("enable-sort");
+            }
 
 			// grab the column templates
 			this._containerNode.find("> *").each(utils.bind(function(index, element) {
@@ -37,8 +42,10 @@ define([
 				this._columnTemplates.push({
 					template: element.html(),
 					label: element.attr("data-title"),
+                    sortColumn: element.attr("data-sort-column"),
                     width: element.attr("data-width"),
-                    updateValue: element.attr("data-update-value")
+                    updateValue: element.attr("data-update-value"),
+                    enableSort: element.attr("data-enable-sort") != "false"
 				});
 
 			}, this));
@@ -301,9 +308,16 @@ define([
 
 			}, this));
 
+            this._childWidgets = [];
+
 		},
 
 		_drawHeaders: function() {
+
+            // unwire click events on the headers
+            this._headerNode.find("th").each(utils.bind(function(index, header) {
+                events.off(header, "click", this._headerClick, this);
+            }, this));
 
 			this._headerNode.empty();
 
@@ -320,6 +334,12 @@ define([
 						.addClass("btn-inverse")
 						.appendTo(this._headerNode);
 
+                    if (!this.enableSort || !column.enableSort) {
+                        header.addClass("no-sort");
+                    }
+
+                    events.on(header, "click", this._headerClick, this);
+
 					if (column.width) {
 
 						header.width(column.width);
@@ -331,6 +351,12 @@ define([
 						header.attr("title", column.label);
 					}
 
+                    var sortColumn = column.sortColumn || column.label;
+
+                    if (sortColumn == this._sortColumn) {
+                        this._updateSort(header, this._sortDirection);
+                    }
+
 				}, this);
 
 			} else {
@@ -339,7 +365,46 @@ define([
 
 			}
 
-		}
+		},
+
+        _updateSort: function(header, direction) {
+            var orderNode = $("<span />").addClass("order").appendTo(header);
+
+            // add the arrow
+            $("<span />").addClass("caret").appendTo(orderNode);
+
+            if (direction == "asc") {
+                orderNode.addClass("dropup");
+            } else {
+                orderNode.removeClass("dropup");
+            }
+
+        },
+
+        _headerClick: function(e) {
+            if (this.enableSort) {
+                var header = $(e.currentTarget),
+                    column = header.data("columnTemplate");
+
+                // check to see if the column is sortable
+                if (column.enableSort) {
+                    // destroy all of the current order elements
+                    this._headerNode.find(".order").detach();
+
+                    var label = column.sortColumn || column.label,
+                        direction = this._sortColumn == label && this._sortDirection == "asc" ? "desc" : "asc";
+
+                    this._sortColumn = label;
+                    this._sortDirection = direction;
+
+                    this._updateSort(header, direction);
+
+                    this.trigger("sort", {column: label, direction: direction});
+                } else {
+                    header.addClass("no-sort");
+                }
+            }
+        }
 
 	});
 

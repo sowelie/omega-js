@@ -19,13 +19,12 @@ define([
 			this._hasStarted = false;
 			this._globalShortcuts = false;
 			this._enableShortcutKeys = false;
+            this._boundProperties = {};
 
 		},
 
 		initDomNode: function() {
-
 			if (!this._domNode) {
-
 				// check to see if a template was provided
 				var template = this.templateString || "<div></div>";
 
@@ -51,12 +50,7 @@ define([
 					this._domNode.removeAttr("data-attach-point");
 					this._domNode.data("attachedToWidget", null);
 				}
-
-				// clear the template string to save memory
-				this.templateString = null;
-
 			}
-
 		},
 
 		attachElements: function() {
@@ -68,7 +62,6 @@ define([
 		},
 
 		_mixinSubTemplates: function() {
-
 			this._mixinTemplateStrings.forEach(function(template) {
 
 				// replace tokens
@@ -100,10 +93,6 @@ define([
 				this._domNode.addClass(className);
 
 			}, this);
-
-			// clear the mixin strings to free memory
-			this._mixinTemplateStrings = null;
-
 		},
 
 		_appendMixinNode: function(node) {
@@ -217,6 +206,7 @@ define([
 
 					this.initDomNode();
 					this.attachElements();
+                    this.bindProperties();
 					parser.parse(this._domNode, this);
 
 				}
@@ -256,6 +246,30 @@ define([
 			this._childWidgets = [];
 
 		},
+
+        bindProperties: function() {
+            // find all nodes that should be bound to a property
+            this._domNode.find("*[data-bind-property]").each(utils.bind(function(index, element) {
+                var e = $(element),
+                    property = e.attr("data-bind-property");
+
+                // store a reference to the property and the element
+                this._boundProperties[property] = e;
+
+                // set the initial value
+                e.html(utils.bindField(this, property));
+            }, this));
+        },
+
+        updateBoundProperties: function() {
+            for (var property in this._boundProperties) {
+                if (this._boundProperties.hasOwnProperty(property)) {
+                    var e = this._boundProperties[property];
+
+                    e.html(utils.bindField(this, property));
+                }
+            }
+        },
 
 		addChild: function(childWidget, addToDOM) {
 
@@ -300,7 +314,7 @@ define([
 
 		eachChild: function(callback, scope) {
 
-			this._childWidgets.forEach(callback, scope);
+			this._childWidgets.some(callback, scope);
 
 		},
 

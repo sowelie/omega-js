@@ -27,9 +27,9 @@ define([
 		setValue: function(value) {
 
 			if (value < 1) {
-				this._valueNode.hide();
+                this.find(".progress-label").hide();
 			} else {
-				this._valueNode.show();
+                this.find(".progress-label").show();
 				this._valueNode.css("width", value + "%");
 			}
 
@@ -43,7 +43,7 @@ define([
 
 		setLabel: function(label) {
 
-			this._domNode.find(".ui-progressbar-label").html(label);
+			this._domNode.find(".progress-label").html(label);
 
 			this._updateLabel();
 
@@ -54,14 +54,15 @@ define([
 			if (value) {
 
 				this._overlayNode.show();
-				this._valueNode.hide();
-				this._domNode.addClass("ui-progressbar-indeterminate");
+				this.find(".progress-label").hide();
+				this._valueNode.addClass("progress-bar-striped active");
 
 			} else {
 
 				this._overlayNode.hide();
+                this.find(".progress-label").show();
 				this.setValue(this.value);
-				this._domNode.removeClass("ui-progressbar-indeterminate");
+				this._valueNode.removeClass("progress-bar-striped active");
 
 			}
 
@@ -70,7 +71,7 @@ define([
 		_updateLabel: function() {
 
 			// position the labels
-			var label = this._domNode.find(".ui-progressbar-label");
+			var label = this._domNode.find(".progress-label");
 
 			this.log(this._domNode.outerWidth(), label.outerWidth(), label.html(), this);
 

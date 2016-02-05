@@ -7,7 +7,6 @@ define([
     var dynamicWhen = _Object.extend({
 
         initialize: function() {
-
             this.inherited(_Object, arguments);
 
             this.promiseCount = 0;
@@ -15,11 +14,9 @@ define([
             this.promises = [];
             this.responses = [];
             this.promise = promise();
-
         },
 
         push: function(promise) {
-
             this.promises.push(promise);
             this.promiseCount++;
 
@@ -34,12 +31,18 @@ define([
 
             }, this);
 
+            return this;
         },
 
         then: function() {
+            // if no promises were added, the promise should be resolved
+            if (this.promises.length == 0) {
+                this.promise.resolve();
+            }
 
             this.promise.then.apply(this.promise, arguments);
 
+            return this;
         }
 
     });
