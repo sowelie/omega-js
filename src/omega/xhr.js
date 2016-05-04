@@ -25,12 +25,11 @@ define([
 
             // serialize any property that is an object
             for (var name in data) {
-
                 var obj = data[name];
 
-                if (typeof(obj) == "object")
-                    data[name] = JSON.stringify(obj);
-
+				if (typeof(obj.forEach) != "function" && typeof(obj) == "object") {
+					data[name] = JSON.stringify(obj);
+				}
             }
 
             data.format = this._defaultDataType;

@@ -9,19 +9,22 @@ define([
 
 		options: {
 			value: 0,
+			animated: false,
+			indeterminate: false,
 			label: ""
 		},
 
 		startup: function() {
-
 			this.inherited(_Widget, arguments);
 
 			this.setValue(this.value);
-
-			this._updateLabel();
-
 			this.setIndeterminate(this.indeterminate);
 
+			if (!this.indeterminate) {
+				this.setAnimated(this.animated);
+			}
+
+			this._updateLabel();
 		},
 
 		setValue: function(value) {
@@ -49,21 +52,24 @@ define([
 
 		},
 
+		setAnimated: function(value) {
+			if (value) {
+				this._valueNode.addClass("progress-bar-striped active");
+			} else {
+				this._valueNode.removeClass("progress-bar-striped active");
+			}
+		},
+
 		setIndeterminate: function(value) {
+			this.setAnimated(value);
 
 			if (value) {
-
 				this._overlayNode.show();
 				this.find(".progress-label").hide();
-				this._valueNode.addClass("progress-bar-striped active");
-
 			} else {
-
 				this._overlayNode.hide();
                 this.find(".progress-label").show();
 				this.setValue(this.value);
-				this._valueNode.removeClass("progress-bar-striped active");
-
 			}
 
 		},

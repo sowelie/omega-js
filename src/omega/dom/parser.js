@@ -18,7 +18,10 @@ function($, utils) {
 			// parse any children
 			$node.find("*[data-widget-class]").each(utils.bind(function(index, element) {
 
-				this._parseElement(element, parentWidget);
+				// check to see if the element has a parent that excludes parsing
+				if ($(element).parents("*[data-widget-parser-ignore]").length == 0) {
+					this._parseElement(element, parentWidget);
+				}
 
 			}, this));
 

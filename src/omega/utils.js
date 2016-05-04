@@ -33,14 +33,23 @@ define([], function() {
 		},
 
 		template: function (str, data, secondary) {
-			var regex = /\{ *([\w_\.]+) *\}/g;
+			var regex = /\{ *([\w_\.:]+) *\}/g;
 
 			if (secondary) {
-				regex = /\$ *([\w_\.]+) *\$/g;
+				regex = /\$ *([\w_\.:]+) *\$/g;
 			}
 
 			return str.replace(regex, this.bind(function (str, key) {
-				return this.bindField(data, key);
+				var defaultValue = "";
+
+				if (key.indexOf(":") >= 0) {
+					var keys = key.split(":");
+					key = keys[0];
+					defaultValue = keys[1];
+				}
+				var result = this.bindField(data, key);
+
+				return result || defaultValue;
 			}, this));
 		},
 

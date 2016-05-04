@@ -220,6 +220,9 @@ define([
                     td.html(value);
                     triggerBind = true;
 
+                    // parse the node so any child widgets are displayed properly
+                    parser.parse(td._domNode, td);
+
                 }
 
 				// find any child elements with an attach point
