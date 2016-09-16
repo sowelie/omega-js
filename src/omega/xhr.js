@@ -27,7 +27,7 @@ define([
             for (var name in data) {
                 var obj = data[name];
 
-				if (typeof(obj.forEach) != "function" && typeof(obj) == "object") {
+				if (obj && typeof(obj.forEach) != "function" && typeof(obj) == "object") {
 					data[name] = JSON.stringify(obj);
 				}
             }
@@ -51,8 +51,10 @@ define([
                         });
                     }
 
-                    // call the callback
-                    (scope ? utils.bind(callback, scope) : callback)(response, false, status, jqxhr);
+					if (callback) {
+						// call the callback
+						(scope ? utils.bind(callback, scope) : callback)(response, false, status, jqxhr);
+					}
 
                     // resolve the promise
                     result.resolve(response, false, status, jqxhr);
@@ -63,8 +65,10 @@ define([
 
                     console.log(response);
 
-                    // call the callback
-                    (scope ? utils.bind(callback, scope) : callback)(response, false, status, jqxhr);
+					if (callback) {
+						// call the callback
+						(scope ? utils.bind(callback, scope) : callback)(response, false, status, jqxhr);
+					}
 
                     result.resolve(response, true, status, jqxhr);
 
@@ -93,7 +97,7 @@ define([
 				data: JSON.stringify(data),
 				type: "POST",
 				dataType: dataType || "json",
-				contentType: "application/json",
+				contentType: "application/json;charset=UTF-8",
 				success: function(response, status, jqxhr) {
 
 					if (response && response.error) {
@@ -103,7 +107,9 @@ define([
 					}
 
 					// call the callback
-					(scope ? utils.bind(callback, scope) : callback)(response, status, jqxhr);
+					if (callback) {
+						(scope ? utils.bind(callback, scope) : callback)(response, status, jqxhr);
+					}
 
 					// resolve the promise
 					result.resolve(response);
@@ -113,8 +119,9 @@ define([
 				error: function(response, status, jqxhr) {
 
 					result.resolve(response);
-					console.log(arguments);
-                    (scope ? utils.bind(callback, scope) : callback)(response.responseJSON ? response.responseJSON : response.responseText, status, jqxhr);
+					if (callback) {
+						(scope ? utils.bind(callback, scope) : callback)(response.responseJSON ? response.responseJSON : response.responseText, status, jqxhr);
+					}
 
 				}
 

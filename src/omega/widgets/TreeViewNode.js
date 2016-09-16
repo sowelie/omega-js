@@ -110,6 +110,15 @@ define([
 
 		},
 
+		getLabel: function() {
+			return this._labelNode.html();
+		},
+
+		setLabel: function(value) {
+			this.label = value;
+			this._labelNode.html(value);
+		},
+
 		setIndeterminate: function(value) {
 
 			if (this._checkBoxNode)

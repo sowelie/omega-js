@@ -91,17 +91,18 @@ define([
 		},
 
 		expandAll: function() {
-
 			this.children.forEach(function(node) {
-
 				node.expand(function() {
-
 					node.expandAll();
-
 				});
-
 			});
+		},
 
+		collapseAll: function() {
+			this.children.forEach(function(node) {
+				node.collapse();
+				node.collapseAll();
+			});
 		},
 
 		expand: function(callback) { },
